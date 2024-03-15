@@ -8,19 +8,23 @@ const typeDefs = `
     _id: ID
     username: String
     email: String
+    cocktailCount: Int
     savedCocktails: [Cocktail]
+  }
+
+  type Ingredient {
+    name: String,
+    measurement: String
   }
 
   type Cocktail {
     _id: ID
     name: String
-    ingredients: [String]
-    measurements: [String]
+    ingredients: [Ingredient]
     instructions: String
     image: String
     category: String
   }
-
 
   type Auth {
     token: ID
@@ -31,14 +35,14 @@ const typeDefs = `
    me: User
   }
 
-  input Ingredient {
+  input IngredientInput {
     name: String,
     measurement: String
   }
 
   input SavedCocktailInput {
     name: String
-    ingredients: [Ingredient]
+    ingredients: [IngredientInput]
     instructions: String
     image: String
     category: String
@@ -48,7 +52,7 @@ const typeDefs = `
     login(email: String!, password: String!): Auth
     addUser(username: String!, email: String!, password: String!): Auth
     saveCocktail(cocktailInput: SavedCocktailInput): User
-    removeCocktail(cocktailId: ID): User
+    removeCocktail(_id: ID): User
   }
 `;
 

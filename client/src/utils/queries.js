@@ -1,5 +1,22 @@
 import { gql } from '@apollo/client';
 
+export const QUERY_GET_ME = gql`
+  query me {
+    me {
+      _id
+      username
+      savedCocktails {
+        _id
+        name
+        ingredients
+        instructions
+        image
+        category
+      }
+    }
+  }
+`;
+
 export const QUERY_PRODUCTS = gql`
   query getProducts($category: ID) {
     products(category: $category) {

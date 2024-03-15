@@ -1,5 +1,5 @@
-const { User, Cocktail, Category } = require('../models');
-const { signToken, AuthenticationError } = require('../utils/auth');
+const { User, Category } = require("../models");
+const { signToken, AuthenticationError } = require("../utils/auth");
 
 const resolvers = {
   Query: {
@@ -35,11 +35,11 @@ const resolvers = {
 
       return { token, user };
     },
-    saveCocktail: async (parent, { userId, cocktailInput }, context) => {
+    saveCocktail: async (parent, { cocktailInput }, context) => {
       // If context has a `user` property, that means the user executing this mutation has a valid JWT and is logged in
       console.log("HERE", cocktailInput);
       if (context.user) {
-        const cocktailRecipe = await User.findOneAndUpdate(
+        const updatedUser = await User.findOneAndUpdate(
           { _id: context.user._id },
           {
             $addToSet: { savedCocktails: cocktailInput },
@@ -49,17 +49,17 @@ const resolvers = {
             // runValidators: true,
           }
         );
-        return cocktailRecipe;
+        return updatedUser;
       }
       // If user attempts to execute this mutation and isn't logged in, throw an error
       throw AuthenticationError;
     },
-     // Make it so a logged in user can only remove a cocktail from their own profile
-     removeCocktail: async (parent, { cocktailId }, context) => {
+    // Make it so a logged in user can only remove a cocktail from their own profile
+    removeCocktail: async (parent, { _id }, context) => {
       if (context.user._id) {
         const updatedUser = await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $pull: { savedCocktails: { cocktailId } } },
+          { $pull: { savedCocktails: { _id } } },
           { new: true }
         );
 
@@ -67,7 +67,7 @@ const resolvers = {
       }
       throw AuthenticationError;
     },
-  }
+  },
 };
 
 module.exports = resolvers;

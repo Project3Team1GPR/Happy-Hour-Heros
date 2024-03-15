@@ -2,15 +2,10 @@ const mongoose = require('mongoose');
 
 const { Schema } = mongoose;
 const bcrypt = require('bcrypt');
-const Order = require('./Order');
+const cocktailSchema = require('./Cocktail');
 
 const userSchema = new Schema({
-  firstName: {
-    type: String,
-    required: true,
-    trim: true
-  },
-  lastName: {
+  username: {
     type: String,
     required: true,
     trim: true
@@ -25,8 +20,14 @@ const userSchema = new Schema({
     required: true,
     minlength: 5
   },
-  orders: [Order.schema]
-});
+  savedCocktails: [cocktailSchema],
+},
+{
+  toJSON: {
+    virtuals: true,
+  },
+}
+);
 
 // set up pre-save middleware to create password
 userSchema.pre('save', async function(next) {
@@ -42,6 +43,11 @@ userSchema.pre('save', async function(next) {
 userSchema.methods.isCorrectPassword = async function(password) {
   return await bcrypt.compare(password, this.password);
 };
+
+// when we query a user, we'll also get another field called `cocktailCount` with the number of saved cocktails we have
+userSchema.virtual('cocktailCount').get(function () {
+  return this.savedCocktails.length;
+});
 
 const User = mongoose.model('User', userSchema);
 

@@ -1,6 +1,7 @@
 import ReactDOM from 'react-dom/client'
 import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 import App from './App.jsx';
 import Home from './pages/Home';
@@ -10,6 +11,8 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import Success from './pages/Success';
 import OrderHistory from './pages/OrderHistory';
+import SearchCocktail from './pages/SearchCocktail.jsx';
+import SavedCocktails from './pages/SavedCocktails.jsx';
 
 const router = createBrowserRouter([
   {
@@ -35,6 +38,14 @@ const router = createBrowserRouter([
       }, {
         path: '/products/:id',
         element: <Detail />
+      }, 
+      {
+        path: '/search',
+        element: <SearchCocktail />
+      },
+      {
+        path: '/saved',
+        element: <SavedCocktails />
       }
     ]
   }

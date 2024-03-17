@@ -9,15 +9,17 @@ import { REMOVE_COCKTAIL } from "../utils/mutations";
 
 const SavedCocktails = () => {
 
-  const { loading, data } = useQuery(QUERY_GET_ME);
+  const { loading, data, refetch } = useQuery(QUERY_GET_ME);
   console.log(data);
 
   const [removeCocktail, { error }] = useMutation(REMOVE_COCKTAIL);
 
   const userData = data?.me || { savedCocktails: [] };
 
+  console.log(userData)
+
   // create function that accepts the cocktails's mongo _id value as param and deletes the cocktail from the database
-  const handleDeleteCocktail = async (_id) => {
+  const handleDeleteCocktail = async (drinkId) => {
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
     if (!token) {
@@ -26,15 +28,18 @@ const SavedCocktails = () => {
 
     try {
       const { data } = await removeCocktail({
-        variables: { _id: _id },
+        variables: { drinkId },
       });
 
       if (!data.removeCocktail) {
         throw new Error("something went wrong!");
       }
 
-      // upon success, remove book's id from localStorage
-      removeCocktailId(_id);
+      // upon success, remove cocktail's id from localStorage
+      removeCocktailId(drinkId);
+
+      // Refetch the me query to update the savedCocktails data
+    refetch();
     } catch (err) {
       console.error(err);
     }
@@ -63,8 +68,8 @@ const SavedCocktails = () => {
         <Row>
           {userData.savedCocktails.map((cocktail) => {
             return (
-              <Col key={cocktail._id} md="4">
-                <Card border="dark">
+              <Col key={cocktail.drinkId} md="10">
+                <Card border="dark" className="mb-3">
                   {cocktail.image ? (
                     <Card.Img
                       src={cocktail.image}
@@ -73,13 +78,20 @@ const SavedCocktails = () => {
                     />
                   ) : null}
                   <Card.Body>
-                    <Card.Title>{cocktail.name}</Card.Title>
-                    <p className='small'>Category: {cocktail.category}</p>
-                    <Card.Text>{cocktail.ingredients}</Card.Text>
-                    <Card.Text>{cocktail.instructions}</Card.Text>
+                    <Card.Title><strong>{cocktail.name}</strong></Card.Title>
+                    <p className='small'><strong>Category:</strong> {cocktail.category}</p>
+                    <Card.Text><strong>Ingredients:</strong>
+                    <ul>
+                      {cocktail.ingredients.map((ingredient, index) => (
+                        <li key={index}>
+                          {ingredient.name}: {ingredient.measurement}
+                        </li>
+                      ))}
+                    </ul></Card.Text>
+                    <Card.Text><strong>Instructions:</strong>{cocktail.instructions}</Card.Text>
                     <Button
                       className="btn-block btn-danger"
-                      onClick={() => handleDeleteCocktail(cocktail._id)}
+                      onClick={() => handleDeleteCocktail(cocktail.drinkId)}
                     >
                       Delete this Cocktail!
                     </Button>

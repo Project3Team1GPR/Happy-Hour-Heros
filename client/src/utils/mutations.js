@@ -19,7 +19,7 @@ export const SAVE_COCKTAIL = gql`
       username
       cocktailCount
       savedCocktails {
-        _id
+        drinkId
         name
         category
         ingredients {
@@ -34,14 +34,14 @@ export const SAVE_COCKTAIL = gql`
 `;
 
 export const REMOVE_COCKTAIL = gql`
-  mutation removeCockatil($_id: ID!) {
-    removeCocktail(_id: $_id) {
+  mutation removeCockatil($drinkId: ID!) {
+    removeCocktail(drinkId: $drinkId) {
       _id
       email
       username
       cocktailCount
       savedCocktails {
-        _id
+        drinkId
         name
         category
         ingredients {

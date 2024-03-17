@@ -42,7 +42,7 @@ const resolvers = {
         const updatedUser = await User.findOneAndUpdate(
           { _id: context.user._id },
           {
-            $addToSet: { savedCocktails: cocktailInput },
+            $push: { savedCocktails: cocktailInput },
           },
           {
             new: true,
@@ -55,11 +55,11 @@ const resolvers = {
       throw AuthenticationError;
     },
     // Make it so a logged in user can only remove a cocktail from their own profile
-    removeCocktail: async (parent, { _id }, context) => {
+    removeCocktail: async (parent, { drinkId }, context) => {
       if (context.user._id) {
         const updatedUser = await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $pull: { savedCocktails: { _id } } },
+          { $pull: { savedCocktails: { drinkId } } },
           { new: true }
         );
 

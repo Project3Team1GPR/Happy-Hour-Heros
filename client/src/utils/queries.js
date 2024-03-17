@@ -4,17 +4,21 @@ export const QUERY_GET_ME = gql`
   query me {
     me {
       _id
-      username
-      savedCocktails {
-        _id
+    username
+    cocktailCount
+    savedCocktails {
+      name
+      category
+      instructions
+      image
+      drinkId
+      ingredients {
         name
-        ingredients
-        instructions
-        image
-        category
+        measurement
       }
     }
   }
+}
 `;
 
 export const QUERY_PRODUCTS = gql`

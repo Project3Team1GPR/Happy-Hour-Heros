@@ -11,6 +11,11 @@ const ingredient = new Schema({
 })
 
 const cocktailSchema = new Schema({
+  drinkId: {
+    type: String,
+    required: true,
+    unique: true
+  },
   name: {
     type: String,
     required: true,

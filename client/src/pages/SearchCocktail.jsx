@@ -123,10 +123,10 @@ const SearchCocktails = () => {
       <SearchForm handleFormSubmit={handleFormSubmit} />
 
       <Container className="py-5">
-        <h2
+        {/* <h2
           className="pt-5"
           style={{
-            color: "var(--dark)",
+            color: "blue",
             fontSize: "24px",
             textAlign: "center",
           }}
@@ -134,7 +134,7 @@ const SearchCocktails = () => {
           {searchedCocktails.length
             ? `Viewing ${searchedCocktails.length} results:`
             : "Search for a cocktail to begin"}
-        </h2>
+        </h2> */}
         <Row>
           {searchedCocktails.map((cocktail) => (
             <Col md={4} key={cocktail._id} className="mb-4">
@@ -153,13 +153,18 @@ const SearchCocktails = () => {
                   <Card.Text>Instructions: {cocktail.instructions}</Card.Text>
                   {Auth.loggedIn() && (
                     <Button
+                      variant={
+                        savedCocktailIds.includes(cocktail._id)
+                          ? "secondary"
+                          : "primary"
+                      } // Adjust these as needed
                       disabled={savedCocktailIds.includes(cocktail._id)}
-                      className="btn-block"
+                      className="w-100"
                       onClick={() => handleSaveCocktail(cocktail._id)}
                     >
                       {savedCocktailIds.includes(cocktail._id)
-                        ? "This cocktail has already been saved!"
-                        : "Save this Cocktail!"}
+                        ? "Saved"
+                        : "Save Cocktail"}
                     </Button>
                   )}
                 </Card.Body>

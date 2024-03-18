@@ -122,40 +122,50 @@ const SearchCocktails = () => {
 
       <SearchForm handleFormSubmit={handleFormSubmit} />
 
-      <Container>
-        <h2 className='pt-5'>
+      <Container className="py-5">
+        <h2
+          className="pt-5"
+          style={{
+            color: "var(--dark)",
+            fontSize: "24px",
+            textAlign: "center",
+          }}
+        >
           {searchedCocktails.length
             ? `Viewing ${searchedCocktails.length} results:`
-            : 'Search for a cocktail to begin'}
+            : "Search for a cocktail to begin"}
         </h2>
         <Row>
-          {searchedCocktails.map((cocktail) => {
-            return (
-              <Col md="4" key={cocktail._id}>
-                <Card border='dark'>
-                  {cocktail.image ? (
-                    <Card.Img src={cocktail.image} alt={`The cover for ${cocktail.name}`} variant='top' />
-                  ) : null}
-                  <Card.Body>
-                    <Card.Title>{cocktail.title}</Card.Title>
-                    <p className='small'>Category: {cocktail.category}</p>
-                    <Card.Text>{cocktail.ingredients}</Card.Text>
-                    <Card.Text>{cocktail.instructions}</Card.Text>
-                    {Auth.loggedIn() && (
-                      <Button
-                        disabled={savedCocktailIds?.some((savedId) => savedId === cocktail._id)}
-                        className='btn-block btn-info'
-                        onClick={() => handleSaveCocktail(cocktail._id)}>
-                        {savedCocktailIds?.some((savedCocktailId) => savedCocktailId === cocktail._id)
-                          ? 'This cocktail has already been saved!'
-                          : 'Save this Cocktail!'}
-                      </Button>
-                    )}
-                  </Card.Body>
-                </Card>
-              </Col>
-            );
-          })}
+          {searchedCocktails.map((cocktail) => (
+            <Col md={4} key={cocktail._id} className="mb-4">
+              <Card border="dark">
+                {cocktail.image && (
+                  <Card.Img
+                    src={cocktail.image}
+                    alt={`The cover for ${cocktail.name}`}
+                    variant="top"
+                  />
+                )}
+                <Card.Body>
+                  <Card.Title>{cocktail.name}</Card.Title>
+                  <p className="small">Category: {cocktail.category}</p>
+                  <Card.Text>Ingredients: {cocktail.ingredients}</Card.Text>
+                  <Card.Text>Instructions: {cocktail.instructions}</Card.Text>
+                  {Auth.loggedIn() && (
+                    <Button
+                      disabled={savedCocktailIds.includes(cocktail._id)}
+                      className="btn-block"
+                      onClick={() => handleSaveCocktail(cocktail._id)}
+                    >
+                      {savedCocktailIds.includes(cocktail._id)
+                        ? "This cocktail has already been saved!"
+                        : "Save this Cocktail!"}
+                    </Button>
+                  )}
+                </Card.Body>
+              </Card>
+            </Col>
+          ))}
         </Row>
       </Container>
     </>

@@ -28,17 +28,7 @@ const Home = () => {
           </div>
         </Carousel.Item>
         {/* Second Carousel Item */}
-        <Carousel.Item>
-          <img
-            className="d-block w-100"
-            src="https://example.com/your-second-image-url.jpg" // Replace with your actual image URL
-            alt="Second slide"
-          />
-          <Carousel.Caption>
-            <h3>Second Slide Label</h3>
-            <p>Some representative placeholder content for the second slide.</p>
-          </Carousel.Caption>
-        </Carousel.Item>
+        
         {/* Add more Carousel.Item as needed */}
       </Carousel>
     </div>

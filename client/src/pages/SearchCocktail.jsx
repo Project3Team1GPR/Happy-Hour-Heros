@@ -9,7 +9,7 @@ import {
 } from 'react-bootstrap';
 
 import Auth from '../utils/auth';
-// import { saveBook, searchGoogleBooks } from '../utils/API';
+import { searchCocktails } from '../utils/API';
 import { saveCocktailIds, getSavedCocktailIds } from '../utils/localStorage';
 import { useMutation } from '@apollo/client';
 import { SAVE_COCKTAIL } from '../utils/mutations';
@@ -19,18 +19,20 @@ const SearchCocktails = () => {
   // create state for holding returned google api data
   const [searchedCocktails, setSearchedCocktails] = useState([]);
   // // create state for holding our search field data
-  // const [searchInput, setSearchInput] = useState('');
+  const [searchInput, setSearchInput] = useState('');
 
   // create state to hold saved bookId values
   const [savedCocktailIds, setSavedCocktailIds] = useState(getSavedCocktailIds());
 
   const [saveCocktail, { error }] = useMutation(SAVE_COCKTAIL);
 
-  // set up useEffect hook to save `savedBookIds` list to localStorage on component unmount
+  const [noResults, setNoResults] = useState(false);
+
+  // set up useEffect hook to save `savedCocktailIds` list to localStorage on component unmount
   // learn more here: https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup
   useEffect(() => {
     return () => saveCocktailIds(savedCocktailIds);
-  });
+  }, [savedCocktailIds]);
 
   // create method to search for books and set state on form submit
   const handleFormSubmit = async (event, searchInput) => {
@@ -42,21 +44,45 @@ const SearchCocktails = () => {
 
     // change line below
     try {
-      const response = await searchGoogleBooks(searchInput);
+      const response = await searchCocktails(searchInput);
 
       if (!response.ok) {
         throw new Error('something went wrong!');
       }
 
-      const { items } = await response.json();
+      const { drinks } = await response.json();
+      if (drinks === null) {
+        setNoResults(true);
+        setSearchedCocktails([]);
+        return;
+      }
 
-      const cocktailData = items.map((cocktail) => ({
-        name: cocktail.name,
-        category: cocktail.category,
-        ingredients: cocktail.ingredients,
-        instructions: cocktail.instructions,
-        image: cocktail.imageLinks?.thumbnail || '',
-      }));
+      const cocktailData = drinks.map((cocktail) => {
+        const ingredients = [];
+        
+        // Iterate over the ingredient and measurement properties dynamically
+        for (let i = 1; i <= 15; i++) {
+          const ingredient = cocktail[`strIngredient${i}`];
+          const measure = cocktail[`strMeasure${i}`];
+          
+          // Check if the ingredient and measure exist and are not empty
+          if (ingredient && measure) {
+            ingredients.push({
+              name: ingredient.trim(),
+              measurement: measure.trim()
+            });
+          }
+        }
+        
+        return {
+          name: cocktail.strDrink,
+          drinkId: cocktail.idDrink,
+          category: cocktail.strCategory,
+          ingredients: ingredients,
+          instructions: cocktail.strInstructions,
+          image: cocktail.strDrinkThumb || '',
+        };
+      });
 
       setSearchedCocktails(cocktailData);
       setSearchInput('');
@@ -66,9 +92,9 @@ const SearchCocktails = () => {
   };
 
   // create function to handle saving a book to our database
-  const handleSaveCocktail = async (_id) => {
+  const handleSaveCocktail = async (drinkId) => {
     // find the book in `searchedBooks` state by the matching id
-    const cocktailToSave = searchedCocktails.find((cocktail) => cocktail._id === _id);
+    const cocktailToSave = searchedCocktails.find((cocktail) => cocktail.drinkId === drinkId);
 
     // get token
     const token = Auth.loggedIn() ? Auth.getToken() : null;
@@ -87,7 +113,7 @@ const SearchCocktails = () => {
       }
 
       // if cocktail successfully saves to user's account, save book id to state
-      setSavedCocktailIds([...savedCocktailIds, cocktailToSave._id]);
+      setSavedCocktailIds([...savedCocktailIds, cocktailToSave.drinkId]);
     } catch (err) {
       console.error(err);
     }
@@ -119,58 +145,55 @@ const SearchCocktails = () => {
           </Form>
         </Container>
       </div> */}
+      {console.log(searchedCocktails.map(cocktail => cocktail.drinkId))}
+
+      
 
       <SearchForm handleFormSubmit={handleFormSubmit} />
 
-      <Container className="py-5">
-        {/* <h2
-          className="pt-5"
-          style={{
-            color: "blue",
-            fontSize: "24px",
-            textAlign: "center",
-          }}
-        >
+      <Container>
+      {noResults && searchedCocktails.length === 0 && (
+          <h2 className="pt-5">No results found for your search.</h2>
+        )}
+        <h2 className='pt-5'>
           {searchedCocktails.length
             ? `Viewing ${searchedCocktails.length} results:`
             : "Search for a cocktail to begin"}
         </h2> */}
         <Row>
-          {searchedCocktails.map((cocktail) => (
-            <Col md={4} key={cocktail._id} className="mb-4">
-              <Card border="dark">
-                {cocktail.image && (
-                  <Card.Img
-                    src={cocktail.image}
-                    alt={`The cover for ${cocktail.name}`}
-                    variant="top"
-                  />
-                )}
-                <Card.Body>
-                  <Card.Title>{cocktail.name}</Card.Title>
-                  <p className="small">Category: {cocktail.category}</p>
-                  <Card.Text>Ingredients: {cocktail.ingredients}</Card.Text>
-                  <Card.Text>Instructions: {cocktail.instructions}</Card.Text>
-                  {Auth.loggedIn() && (
-                    <Button
-                      variant={
-                        savedCocktailIds.includes(cocktail._id)
-                          ? "secondary"
-                          : "primary"
-                      } // Adjust these as needed
-                      disabled={savedCocktailIds.includes(cocktail._id)}
-                      className="w-100"
-                      onClick={() => handleSaveCocktail(cocktail._id)}
-                    >
-                      {savedCocktailIds.includes(cocktail._id)
-                        ? "Saved"
-                        : "Save Cocktail"}
-                    </Button>
-                  )}
-                </Card.Body>
-              </Card>
-            </Col>
+          {searchedCocktails.map((cocktail) => {
+            return (
+              <Col md="10" key={cocktail.drinkId}>
+                <Card border='dark' className="mb-3">
+                  {cocktail.image ? (
+                    <Card.Img src={cocktail.image} alt={`The cover for ${cocktail.name}`} variant='top' />
+                  ) : null}
+                  <Card.Body>
+                    <Card.Title><strong>{cocktail.name}</strong></Card.Title>
+                    <p className='small'><strong>Category:</strong> {cocktail.category}</p>
+                    <Card.Text><strong>Ingredients:</strong> <ul>
+          {cocktail.ingredients.map((ingredient, index) => (
+            <li key={index}>
+              {ingredient.name}: {ingredient.measurement}
+            </li>
           ))}
+        </ul></Card.Text>
+                    <Card.Text><strong>Instructions:</strong> {cocktail.instructions}</Card.Text>
+                    {Auth.loggedIn() && (
+                      <Button
+                        disabled={savedCocktailIds?.some((savedId) => savedId === cocktail.drinkId)}
+                        className='btn-block btn-info'
+                        onClick={() => handleSaveCocktail(cocktail.drinkId)}>
+                        {savedCocktailIds?.some((savedCocktailId) => savedCocktailId === cocktail.drinkId)
+                          ? 'This cocktail has already been saved!'
+                          : 'Save this Cocktail!'}
+                      </Button>
+                    )}
+                  </Card.Body>
+                </Card>
+              </Col>
+            );
+          })}
         </Row>
       </Container>
     </>

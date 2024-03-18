@@ -26,6 +26,8 @@ const SearchCocktails = () => {
 
   const [saveCocktail, { error }] = useMutation(SAVE_COCKTAIL);
 
+  const [noResults, setNoResults] = useState(false);
+
   // set up useEffect hook to save `savedCocktailIds` list to localStorage on component unmount
   // learn more here: https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup
   useEffect(() => {
@@ -49,6 +51,11 @@ const SearchCocktails = () => {
       }
 
       const { drinks } = await response.json();
+      if (drinks === null) {
+        setNoResults(true);
+        setSearchedCocktails([]);
+        return;
+      }
 
       const cocktailData = drinks.map((cocktail) => {
         const ingredients = [];
@@ -145,6 +152,9 @@ const SearchCocktails = () => {
       <SearchForm handleFormSubmit={handleFormSubmit} />
 
       <Container>
+      {noResults && searchedCocktails.length === 0 && (
+          <h2 className="pt-5">No results found for your search.</h2>
+        )}
         <h2 className='pt-5'>
           {searchedCocktails.length
             ? `Viewing ${searchedCocktails.length} results:`

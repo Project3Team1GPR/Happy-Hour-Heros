@@ -18,12 +18,16 @@ const SearchForm = ({ handleFormSubmit }) => {
                   onChange={(e) => setSearchInput(e.target.value)}
                   type="text"
                   size="lg"
-                  placeholder="Search for a cocktail"
+                  placeholder="search the cocktail codex"
                 />
               </Col>
               <Col xs={12} md={4}>
-                <Button type="submit" variant="success" size="lg">
-                  Submit Search
+                <Button
+                  type="submit"
+                  style={{ backgroundColor: "blue", borderColor: "blue" }}
+                  size="lg"
+                >
+                  Submit
                 </Button>
               </Col>
             </Row>

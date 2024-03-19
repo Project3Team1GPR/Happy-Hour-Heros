@@ -18,7 +18,8 @@ const typeDefs = `
   }
 
   type Cocktail {
-    drinkId: ID
+    _id: ID
+    drinkId: String
     name: String
     ingredients: [Ingredient]
     instructions: String
@@ -32,6 +33,8 @@ const typeDefs = `
   }
 
   type Query {
+    cocktails: [Cocktail]
+    users: [User]
    me: User
   }
 
@@ -48,6 +51,7 @@ const typeDefs = `
     image: String
     category: String
   }
+
 
   type Mutation {
     login(email: String!, password: String!): Auth

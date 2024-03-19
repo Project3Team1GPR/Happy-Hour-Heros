@@ -15,18 +15,23 @@ import { useMutation } from '@apollo/client';
 import { SAVE_COCKTAIL } from '../utils/mutations';
 import SearchForm from '../components/SearchForm';
 
+import { useGlobalContext } from '../utils/GlobalState';
+
 const SearchCocktails = () => {
   // create state for holding returned google api data
   const [searchedCocktails, setSearchedCocktails] = useState([]);
   // // create state for holding our search field data
   const [searchInput, setSearchInput] = useState('');
 
-  // create state to hold saved bookId values
+  // create state to hold saved drinkId values
   const [savedCocktailIds, setSavedCocktailIds] = useState(getSavedCocktailIds());
 
   const [saveCocktail, { error }] = useMutation(SAVE_COCKTAIL);
 
   const [noResults, setNoResults] = useState(false);
+
+  const [user, setUser] = useGlobalContext();
+
 
   // set up useEffect hook to save `savedCocktailIds` list to localStorage on component unmount
   // learn more here: https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup
@@ -112,7 +117,7 @@ const SearchCocktails = () => {
         throw new Error('something went wrong!');
       }
 
-      // if cocktail successfully saves to user's account, save book id to state
+      // if cocktail successfully saves to user's account, save drink id to state
       setSavedCocktailIds([...savedCocktailIds, cocktailToSave.drinkId]);
     } catch (err) {
       console.error(err);

@@ -6,6 +6,8 @@ import Auth from "../utils/auth";
 import { removeCocktailId } from "../utils/localStorage";
 import { QUERY_GET_ME } from "../utils/queries";
 import { REMOVE_COCKTAIL } from "../utils/mutations";
+import { useGlobalContext } from '../utils/GlobalState';
+
 
 const SavedCocktails = () => {
 
@@ -14,9 +16,11 @@ const SavedCocktails = () => {
 
   const [removeCocktail, { error }] = useMutation(REMOVE_COCKTAIL);
 
-  const userData = data?.me || { savedCocktails: [] };
+  // const userData = data?.me || { savedCocktails: [] };
 
-  console.log(userData)
+  // console.log(userData)
+
+  const [user, setUser] = useGlobalContext();
 
   // create function that accepts the cocktails's mongo _id value as param and deletes the cocktail from the database
   const handleDeleteCocktail = async (drinkId) => {
@@ -54,19 +58,19 @@ const SavedCocktails = () => {
     <>
       <div className="text-light bg-dark p-5">
         <Container>
-          <h1>Viewing {userData.username}'s cocktails!</h1>
+          <h1>Viewing {user.username}'s cocktails!</h1>
         </Container>
       </div>
       <Container>
         <h2 className="pt-5">
-          {userData.savedCocktails.length
-            ? `Viewing ${userData.savedCocktails.length} saved ${
-                userData.savedCocktails.length === 1 ? "cocktail" : "cocktails"
+          {user.savedCocktails.length
+            ? `Viewing ${user.savedCocktails.length} saved ${
+                user.savedCocktails.length === 1 ? "cocktail" : "cocktails"
               }:`
             : "You have no saved cocktails!"}
         </h2>
         <Row>
-          {userData.savedCocktails.map((cocktail) => {
+          {user.savedCocktails.map((cocktail) => {
             return (
               <Col key={cocktail.drinkId} md="10">
                 <Card border="dark" className="mb-3">

@@ -20,7 +20,10 @@ const userSchema = new Schema({
     required: true,
     minlength: 5
   },
-  savedCocktails: [cocktailSchema],
+  savedCocktails:[{
+    type: Schema.Types.ObjectId,
+    ref: "cocktail"
+  }]
 },
 {
   toJSON: {
@@ -46,9 +49,10 @@ userSchema.methods.isCorrectPassword = async function(password) {
 
 // when we query a user, we'll also get another field called `cocktailCount` with the number of saved cocktails we have
 userSchema.virtual('cocktailCount').get(function () {
-  return this.savedCocktails.length;
+  // return this.savedCocktails.length;
+  return 1;
 });
 
-const User = mongoose.model('User', userSchema);
+const User = mongoose.model('user', userSchema);
 
 module.exports = User;

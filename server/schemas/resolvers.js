@@ -1,4 +1,4 @@
-const { User, Category } = require("../models");
+const { User, Cocktail } = require("../models");
 const { signToken, AuthenticationError } = require("../utils/auth");
 
 const resolvers = {
@@ -9,6 +9,12 @@ const resolvers = {
       }
       throw AuthenticationError;
     },
+    cocktails: async () => {
+      return await Cocktail.find({});
+    },
+    users: async () => {
+      return await User.find({}).populate;
+    }
   },
 
   Mutation: {
@@ -19,8 +25,8 @@ const resolvers = {
       return { token, user };
     },
     login: async (parent, { email, password }) => {
-      const user = await User.findOne({ email });
-
+      const user = await User.findOne({ email }).populate("savedCocktails");
+      console.log("USER", user)
       if (!user) {
         throw AuthenticationError;
       }
@@ -39,16 +45,39 @@ const resolvers = {
       // If context has a `user` property, that means the user executing this mutation has a valid JWT and is logged in
       console.log("HERE", cocktailInput);
       if (context.user) {
+        let cocktail;
+        // search Coctail collection for cocktainInput by ApiId
+        cocktail = await Cocktail.findOne({drinkId: cocktailInput.drinkId})
+        // if cocktail doesn't exist, add to Coctail collection
+        if (!cocktail) {
+          console.log("New Cocktail");
+          cocktail = await Cocktail.create(cocktailInput)
+        }
+        // now, you have a Coctail document from database
+        console.log(cocktail)
+
+        const dbUser = await User.findById(context.user._id).populate("savedCocktails");
+        console.log(dbUser)
+
+        const foundCocktail = dbUser.savedCocktails.find(ct => ct.drinkId == cocktail.drinkId);
+        console.log("FOUND", foundCocktail)
+        if (foundCocktail) {
+          return dbUser;
+        }
+
         const updatedUser = await User.findOneAndUpdate(
           { _id: context.user._id },
           {
-            $push: { savedCocktails: cocktailInput },
+            // change this to push the ID of the database cocktatil
+            $push: { savedCocktails: cocktail._id },
           },
           {
             new: true,
             // runValidators: true,
+            populate: { path: "savedCocktails" }
           }
         );
+        console.log(updatedUser)
         return updatedUser;
       }
       // If user attempts to execute this mutation and isn't logged in, throw an error

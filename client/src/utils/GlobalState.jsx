@@ -4,15 +4,15 @@ import { reducer } from './reducers'
 const StoreContext = createContext();
 const { Provider } = StoreContext;
 
-const StoreProvider = ({ ...props }) => {
+const GlobalStateProvider = ({ ...props }) => {
   
   const [user, setUser] = useState({});
 
   return <Provider value={[user, setUser]} {...props} />;
 };
 
-const useStoreContext = () => {
+const useGlobalContext = () => {
   return useContext(StoreContext);
 };
 
-export { StoreProvider, useStoreContext };
+export { GlobalStateProvider, useGlobalContext };

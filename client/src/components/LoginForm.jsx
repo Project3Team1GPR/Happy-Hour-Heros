@@ -2,16 +2,19 @@
 import { useState, useEffect } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
 import { useMutation } from '@apollo/client';
-
+import {useNavigate} from "react-router-dom";
 import { LOGIN } from '../utils/mutations';
 import Auth from '../utils/auth';
+import { useGlobalContext } from '../utils/GlobalState';
 
 const LoginForm = () => {
+  const navigate = useNavigate();
   const [userFormData, setUserFormData] = useState({ email: '', password: '' });
   const [validated] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
 
   const [loginUser, { error }] = useMutation(LOGIN);
+  const [user, setUser] = useGlobalContext();
 
   useEffect(() => {
     if (error) {
@@ -45,9 +48,11 @@ const LoginForm = () => {
         throw new Error('something went wrong!');
       }
 
-      const { token, user } = await data.login;
+      // const { token, user } = await data.login;
+      setUser(data.login.user);
       console.log(user);
       Auth.login(data.login.token);
+      navigate("/saved");
     } catch (err) {
       console.error(err);
     }

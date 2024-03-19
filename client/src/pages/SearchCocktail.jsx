@@ -1,28 +1,23 @@
-import { useState, useEffect } from 'react';
-import {
-  Container,
-  Col,
-  Form,
-  Button,
-  Card,
-  Row
-} from 'react-bootstrap';
+import { useState, useEffect } from "react";
+import { Container, Col, Form, Button, Card, Row } from "react-bootstrap";
 
-import Auth from '../utils/auth';
-import { searchCocktails } from '../utils/API';
-import { saveCocktailIds, getSavedCocktailIds } from '../utils/localStorage';
-import { useMutation } from '@apollo/client';
-import { SAVE_COCKTAIL } from '../utils/mutations';
-import SearchForm from '../components/SearchForm';
+import Auth from "../utils/auth";
+import { searchCocktails } from "../utils/API";
+import { saveCocktailIds, getSavedCocktailIds } from "../utils/localStorage";
+import { useMutation } from "@apollo/client";
+import { SAVE_COCKTAIL } from "../utils/mutations";
+import SearchForm from "../components/SearchForm";
 
 const SearchCocktails = () => {
   // create state for holding returned google api data
   const [searchedCocktails, setSearchedCocktails] = useState([]);
   // // create state for holding our search field data
-  const [searchInput, setSearchInput] = useState('');
+  const [searchInput, setSearchInput] = useState("");
 
   // create state to hold saved bookId values
-  const [savedCocktailIds, setSavedCocktailIds] = useState(getSavedCocktailIds());
+  const [savedCocktailIds, setSavedCocktailIds] = useState(
+    getSavedCocktailIds()
+  );
 
   const [saveCocktail, { error }] = useMutation(SAVE_COCKTAIL);
 
@@ -47,7 +42,7 @@ const SearchCocktails = () => {
       const response = await searchCocktails(searchInput);
 
       if (!response.ok) {
-        throw new Error('something went wrong!');
+        throw new Error("something went wrong!");
       }
 
       const { drinks } = await response.json();
@@ -59,33 +54,33 @@ const SearchCocktails = () => {
 
       const cocktailData = drinks.map((cocktail) => {
         const ingredients = [];
-        
+
         // Iterate over the ingredient and measurement properties dynamically
         for (let i = 1; i <= 15; i++) {
           const ingredient = cocktail[`strIngredient${i}`];
           const measure = cocktail[`strMeasure${i}`];
-          
+
           // Check if the ingredient and measure exist and are not empty
           if (ingredient && measure) {
             ingredients.push({
               name: ingredient.trim(),
-              measurement: measure.trim()
+              measurement: measure.trim(),
             });
           }
         }
-        
+
         return {
           name: cocktail.strDrink,
           drinkId: cocktail.idDrink,
           category: cocktail.strCategory,
           ingredients: ingredients,
           instructions: cocktail.strInstructions,
-          image: cocktail.strDrinkThumb || '',
+          image: cocktail.strDrinkThumb || "",
         };
       });
 
       setSearchedCocktails(cocktailData);
-      setSearchInput('');
+      setSearchInput("");
     } catch (err) {
       console.error(err);
     }
@@ -94,7 +89,9 @@ const SearchCocktails = () => {
   // create function to handle saving a book to our database
   const handleSaveCocktail = async (drinkId) => {
     // find the book in `searchedBooks` state by the matching id
-    const cocktailToSave = searchedCocktails.find((cocktail) => cocktail.drinkId === drinkId);
+    const cocktailToSave = searchedCocktails.find(
+      (cocktail) => cocktail.drinkId === drinkId
+    );
 
     // get token
     const token = Auth.loggedIn() ? Auth.getToken() : null;
@@ -105,11 +102,11 @@ const SearchCocktails = () => {
 
     try {
       const { data } = await saveCocktail({
-        variables: { cocktailInput: {...cocktailToSave} },
+        variables: { cocktailInput: { ...cocktailToSave } },
       });
 
       if (!data.saveCocktail) {
-        throw new Error('something went wrong!');
+        throw new Error("something went wrong!");
       }
 
       // if cocktail successfully saves to user's account, save book id to state
@@ -145,17 +142,15 @@ const SearchCocktails = () => {
           </Form>
         </Container>
       </div> */}
-      {console.log(searchedCocktails.map(cocktail => cocktail.drinkId))}
-
-      
+      {console.log(searchedCocktails.map((cocktail) => cocktail.drinkId))}
 
       <SearchForm handleFormSubmit={handleFormSubmit} />
 
       <Container>
-      {noResults && searchedCocktails.length === 0 && (
+        {noResults && searchedCocktails.length === 0 && (
           <h2 className="pt-5">No results found for your search.</h2>
         )}
-        <h2 className='pt-5'>
+        {/* {/* <h2 className='pt-5'>
           {searchedCocktails.length
             ? `Viewing ${searchedCocktails.length} results:`
             : "Search for a cocktail to begin"}
@@ -164,29 +159,48 @@ const SearchCocktails = () => {
           {searchedCocktails.map((cocktail) => {
             return (
               <Col md="10" key={cocktail.drinkId}>
-                <Card border='dark' className="mb-3">
+                <Card border="dark" className="mb-3">
                   {cocktail.image ? (
-                    <Card.Img src={cocktail.image} alt={`The cover for ${cocktail.name}`} variant='top' />
+                    <Card.Img
+                      src={cocktail.image}
+                      alt={`The cover for ${cocktail.name}`}
+                      variant="top"
+                    />
                   ) : null}
                   <Card.Body>
-                    <Card.Title><strong>{cocktail.name}</strong></Card.Title>
-                    <p className='small'><strong>Category:</strong> {cocktail.category}</p>
-                    <Card.Text><strong>Ingredients:</strong> <ul>
-          {cocktail.ingredients.map((ingredient, index) => (
-            <li key={index}>
-              {ingredient.name}: {ingredient.measurement}
-            </li>
-          ))}
-        </ul></Card.Text>
-                    <Card.Text><strong>Instructions:</strong> {cocktail.instructions}</Card.Text>
+                    <Card.Title>
+                      <strong>{cocktail.name}</strong>
+                    </Card.Title>
+                    <p className="small">
+                      <strong>Category:</strong> {cocktail.category}
+                    </p>
+                    <Card.Text>
+                      <strong>Ingredients:</strong>{" "}
+                      <ul>
+                        {cocktail.ingredients.map((ingredient, index) => (
+                          <li key={index}>
+                            {ingredient.name}: {ingredient.measurement}
+                          </li>
+                        ))}
+                      </ul>
+                    </Card.Text>
+                    <Card.Text>
+                      <strong>Instructions:</strong> {cocktail.instructions}
+                    </Card.Text>
                     {Auth.loggedIn() && (
                       <Button
-                        disabled={savedCocktailIds?.some((savedId) => savedId === cocktail.drinkId)}
-                        className='btn-block btn-info'
-                        onClick={() => handleSaveCocktail(cocktail.drinkId)}>
-                        {savedCocktailIds?.some((savedCocktailId) => savedCocktailId === cocktail.drinkId)
-                          ? 'This cocktail has already been saved!'
-                          : 'Save this Cocktail!'}
+                        disabled={savedCocktailIds?.some(
+                          (savedId) => savedId === cocktail.drinkId
+                        )}
+                        className="btn-block btn-info"
+                        onClick={() => handleSaveCocktail(cocktail.drinkId)}
+                      >
+                        {savedCocktailIds?.some(
+                          (savedCocktailId) =>
+                            savedCocktailId === cocktail.drinkId
+                        )
+                          ? "This cocktail has already been saved!"
+                          : "Save this Cocktail!"}
                       </Button>
                     )}
                   </Card.Body>

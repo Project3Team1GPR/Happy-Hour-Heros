@@ -156,11 +156,11 @@ const SearchCocktails = () => {
             : "Search for a cocktail to begin"}
         </h2>{" "}
         
-        <Row>
+        <Row className="cocktail-container">
           {searchedCocktails.map((cocktail) => {
             return (
-              <Col md="10" key={cocktail.drinkId}>
-                <Card border="dark" className="mb-3">
+              <Col md="3" key={cocktail.drinkId}>
+                <Card border="dark" className="col-md-12">
                   {cocktail.image ? (
                     <Card.Img
                       src={cocktail.image}
@@ -168,7 +168,7 @@ const SearchCocktails = () => {
                       variant="top"
                     />
                   ) : null}
-                  <Card.Body>
+                  <Card.Body className="card-style">
                     <Card.Title>
                       <strong>{cocktail.name}</strong>
                     </Card.Title>

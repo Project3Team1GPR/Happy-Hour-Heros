@@ -34,13 +34,13 @@ const SearchForm = ({ handleFormSubmit }) => {
           </Form>
         </Container>
       </div>
-      <div className="text-center mt-5">
+      {/* <div className="text-center mt-5">
         <img
           src="https://www.pngall.com/wp-content/uploads/5/Summer-Cocktail-PNG-Free-Image.png"
           alt="Cocktail Banner"
           className="img-fluid"
         />
-      </div>
+      </div> */}
     </>
   );
 };

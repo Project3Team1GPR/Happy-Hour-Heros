@@ -57,7 +57,7 @@ const typeDefs = `
     login(email: String!, password: String!): Auth
     addUser(username: String!, email: String!, password: String!): Auth
     saveCocktail(cocktailInput: SavedCocktailInput): User
-    removeCocktail(drinkId: ID): User
+    removeCocktail(cocktailId: ID): User
   }
 `;
 

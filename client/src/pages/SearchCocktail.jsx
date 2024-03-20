@@ -97,10 +97,9 @@ const SearchCocktails = () => {
   };
 
   // create function to handle saving a book to our database
-  const handleSaveCocktail = async (drinkId) => {
+  const handleSaveCocktail = async (cocktail) => {
     // find the book in `searchedBooks` state by the matching id
-    const cocktailToSave = searchedCocktails.find((cocktail) => cocktail.drinkId === drinkId);
-
+    
     // get token
     const token = Auth.loggedIn() ? Auth.getToken() : null;
 
@@ -110,15 +109,15 @@ const SearchCocktails = () => {
 
     try {
       const { data } = await saveCocktail({
-        variables: { cocktailInput: {...cocktailToSave} },
+        variables: { cocktailInput: {...cocktail} },
       });
 
       if (!data.saveCocktail) {
         throw new Error('something went wrong!');
       }
-
+      setUser(data.saveCocktail)
       // if cocktail successfully saves to user's account, save drink id to state
-      setSavedCocktailIds([...savedCocktailIds, cocktailToSave.drinkId]);
+      // setSavedCocktailIds([...savedCocktailIds, cocktailToSave.drinkId]);
     } catch (err) {
       console.error(err);
     }
@@ -188,8 +187,8 @@ const SearchCocktails = () => {
                       <Button
                         disabled={savedCocktailIds?.some((savedId) => savedId === cocktail.drinkId)}
                         className='btn-block btn-info'
-                        onClick={() => handleSaveCocktail(cocktail.drinkId)}>
-                        {savedCocktailIds?.some((savedCocktailId) => savedCocktailId === cocktail.drinkId)
+                        onClick={() => handleSaveCocktail(cocktail)}>
+                        {user.savedCocktails?.some((sc) => sc.drinkId === cocktail.drinkId)
                           ? 'This cocktail has already been saved!'
                           : 'Save this Cocktail!'}
                       </Button>

@@ -1,20 +1,21 @@
 import { useState, useEffect } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
-
 import { useMutation } from '@apollo/client';
+import {useNavigate} from "react-router-dom";
 import { ADD_USER } from '../utils/mutations';
-
 import Auth from '../utils/auth';
+import { useGlobalContext } from '../utils/GlobalState';
 
 const SignupForm = () => {
+  const navigate = useNavigate();
   // set initial form state
   const [userFormData, setUserFormData] = useState({ username: '', email: '', password: '' });
   // set state for form validation
   const [validated] = useState(false);
   // set state for alert
   const [showAlert, setShowAlert] = useState(false);
-
   const [addUser, { error }] = useMutation(ADD_USER);
+  const [user, setUser] = useGlobalContext();
 
   useEffect(() => {
     if (error) {
@@ -47,11 +48,12 @@ const SignupForm = () => {
       if (!data.addUser.token) {
         throw new Error('something went wrong!');
       }
+      console.log("SIGNED UP", data);
 
-      const { token, user } = data.addUser;
-      console.log('User data:', user);
-
+      setUser(data.addUser.user);
+      console.log(user);
       Auth.login(data.addUser.token);
+      navigate("/saved");
     } catch (err) {
       console.error(err);
 

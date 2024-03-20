@@ -5,7 +5,7 @@ const resolvers = {
   Query: {
     me: async (parent, args, context) => {
       if (context.user) {
-        return User.findOne({ _id: context.user._id });
+        return User.findOne({ _id: context.user._id }).populate("savedCocktails");
       }
       throw AuthenticationError;
     },
@@ -19,7 +19,8 @@ const resolvers = {
 
   Mutation: {
     addUser: async (parent, { username, email, password }) => {
-      const user = await User.create({ username, email, password });
+      const newUser = (await User.create({ username, email, password }));
+      const user = await User.findById(newUser._id).populate("savedCocktails");
       const token = signToken(user);
 
       return { token, user };
@@ -84,13 +85,17 @@ const resolvers = {
       throw AuthenticationError;
     },
     // Make it so a logged in user can only remove a cocktail from their own profile
-    removeCocktail: async (parent, { drinkId }, context) => {
+    removeCocktail: async (parent, { cocktailId }, context) => {
+      console.log("id", cocktailId)
       if (context.user._id) {
+        const dbUser = await User.findById(context.user._id);
+        console.log(dbUser);
+
         const updatedUser = await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $pull: { savedCocktails: { drinkId } } },
+          { $pull: { savedCocktails:  cocktailId } },
           { new: true }
-        );
+        ).populate("savedCocktails");
 
         return updatedUser;
       }

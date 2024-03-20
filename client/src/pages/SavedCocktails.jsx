@@ -23,16 +23,11 @@ const SavedCocktails = () => {
   const [user, setUser] = useGlobalContext();
 
   // create function that accepts the cocktails's mongo _id value as param and deletes the cocktail from the database
-  const handleDeleteCocktail = async (drinkId) => {
-    const token = Auth.loggedIn() ? Auth.getToken() : null;
-
-    if (!token) {
-      return false;
-    }
-
+  const handleDeleteCocktail = async (cocktail) => {
+    console.log("REMOVING", cocktail)
     try {
       const { data } = await removeCocktail({
-        variables: { drinkId },
+        variables: { cocktailId: cocktail._id },
       });
 
       if (!data.removeCocktail) {
@@ -40,7 +35,9 @@ const SavedCocktails = () => {
       }
 
       // upon success, remove cocktail's id from localStorage
-      removeCocktailId(drinkId);
+      // removeCocktailId(drinkId);
+
+      setUser(data.removeCocktail)
 
       // Refetch the me query to update the savedCocktails data
     refetch();
@@ -54,6 +51,10 @@ const SavedCocktails = () => {
     return <h2>LOADING...</h2>;
   }
 
+  if (!user._id) {
+    return <h1>Getting Profile</h1>
+  }
+
   return (
     <>
       <div className="text-light bg-dark p-5">
@@ -63,14 +64,14 @@ const SavedCocktails = () => {
       </div>
       <Container>
         <h2 className="pt-5">
-          {user.savedCocktails.length
+          {user?.savedCocktails?.length
             ? `Viewing ${user.savedCocktails.length} saved ${
                 user.savedCocktails.length === 1 ? "cocktail" : "cocktails"
               }:`
             : "You have no saved cocktails!"}
         </h2>
         <Row>
-          {user.savedCocktails.map((cocktail) => {
+          {user?.savedCocktails.map((cocktail) => {
             return (
               <Col key={cocktail.drinkId} md="10">
                 <Card border="dark" className="mb-3">
@@ -86,7 +87,7 @@ const SavedCocktails = () => {
                     <p className='small'><strong>Category:</strong> {cocktail.category}</p>
                     <Card.Text><strong>Ingredients:</strong>
                     <ul>
-                      {cocktail.ingredients.map((ingredient, index) => (
+                      {cocktail.ingredients?.map((ingredient, index) => (
                         <li key={index}>
                           {ingredient.name}: {ingredient.measurement}
                         </li>
@@ -95,7 +96,7 @@ const SavedCocktails = () => {
                     <Card.Text><strong>Instructions:</strong>{cocktail.instructions}</Card.Text>
                     <Button
                       className="btn-block btn-danger"
-                      onClick={() => handleDeleteCocktail(cocktail.drinkId)}
+                      onClick={() => handleDeleteCocktail(cocktail)}
                     >
                       Delete this Cocktail!
                     </Button>

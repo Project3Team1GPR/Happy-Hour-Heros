@@ -12,7 +12,6 @@ const LoginForm = () => {
   const [userFormData, setUserFormData] = useState({ email: '', password: '' });
   const [validated] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
-
   const [loginUser, { error }] = useMutation(LOGIN);
   const [user, setUser] = useGlobalContext();
 
@@ -49,8 +48,8 @@ const LoginForm = () => {
       }
 
       // const { token, user } = await data.login;
+      console.log("LOGGED IN", data);
       setUser(data.login.user);
-      console.log(user);
       Auth.login(data.login.token);
       navigate("/saved");
     } catch (err) {

@@ -33,6 +33,7 @@ export const SAVE_COCKTAIL = gql`
       username
       cocktailCount
       savedCocktails {
+        _id
         drinkId
         name
         category
@@ -48,13 +49,14 @@ export const SAVE_COCKTAIL = gql`
 `;
 
 export const REMOVE_COCKTAIL = gql`
-  mutation removeCockatil($drinkId: ID!) {
-    removeCocktail(drinkId: $drinkId) {
+  mutation removeCockatil($cocktailId: ID!) {
+    removeCocktail(cocktailId: $cocktailId) {
       _id
       email
       username
       cocktailCount
       savedCocktails {
+        _id
         drinkId
         name
         category
@@ -75,6 +77,21 @@ export const ADD_USER = gql`
       token
       user {
         _id
+        username
+        email
+        cocktailCount
+        savedCocktails {
+          _id
+          category
+          drinkId
+          image
+          ingredients {
+            measurement
+            name
+          }
+          instructions
+          name
+        }
       }
     }
   }

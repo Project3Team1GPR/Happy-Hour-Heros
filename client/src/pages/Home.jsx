@@ -3,8 +3,10 @@ import auth from '../utils/auth'
 import { QUERY_GET_ME } from "../utils/queries";
 import {useQuery} from '@apollo/client'
 import { saveCocktailIds, getSavedCocktailIds } from "../utils/localStorage";
+
 import React from "react";
 import Carousel from "react-bootstrap/Carousel";
+
 
 const Home = () => {
 

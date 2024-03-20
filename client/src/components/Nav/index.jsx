@@ -40,7 +40,7 @@ const AppNavbar = () => {
       <Navbar bg="dark" variant="dark" expand="lg">
         <Container fluid>
           <Navbar.Brand as={Link} to="/">
-            Cocktail Search
+            HAPPY HOUR UNCODED
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="navbar" />
           <Navbar.Collapse id="navbar" className="flex-row-reverse">
@@ -78,10 +78,15 @@ const AppNavbar = () => {
             <Modal.Title id="signup-modal">
               <Nav variant="pills">
                 <Nav.Item>
-                  <Nav.Link eventKey="login">Login</Nav.Link>
+                  {/* modal button colors HERE will have to figure out active an inactive*/}
+                  <Nav.Link style={{backgroundColor: "black"}} eventKey="login">
+                    Login
+                  </Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                  <Nav.Link eventKey="signup">Sign Up</Nav.Link>
+                  <Nav.Link  eventKey="signup">
+                    Sign Up
+                  </Nav.Link>
                 </Nav.Item>
               </Nav>
             </Modal.Title>

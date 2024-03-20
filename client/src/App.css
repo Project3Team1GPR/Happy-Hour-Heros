@@ -40,3 +40,16 @@
 .read-the-docs {
   color: #888;
 }
+
+.cocktail-container{
+  display: flex;
+  flex-direction: row;
+}
+
+.card-style{
+  width:100%;
+}
+
+.modal-button{
+  background-color: black;
+}

@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react";
 import { Container, Col, Form, Button, Card, Row } from "react-bootstrap";
-import { useState, useEffect } from "react";
-import { Container, Col, Form, Button, Card, Row } from "react-bootstrap";
 
 import Auth from "../utils/auth";
 import { searchCocktails } from "../utils/API";
@@ -70,7 +68,6 @@ const SearchCocktails = () => {
             ingredients.push({
               name: ingredient.trim(),
               measurement: measure.trim(),
-              measurement: measure.trim(),
             });
           }
         }
@@ -82,7 +79,6 @@ const SearchCocktails = () => {
           category: cocktail.strCategory,
           ingredients: ingredients,
           instructions: cocktail.strInstructions,
-          image: cocktail.strDrinkThumb || "",
           image: cocktail.strDrinkThumb || "",
         };
       });

@@ -13,12 +13,12 @@ const SearchCocktails = () => {
   const [searchedCocktails, setSearchedCocktails] = useState([]);
   // // create state for holding our search field data
   const [searchInput, setSearchInput] = useState("");
-
+  
   // create state to hold saved bookId values
   const [savedCocktailIds, setSavedCocktailIds] = useState(
     getSavedCocktailIds()
   );
-
+  
   const [saveCocktail, { error }] = useMutation(SAVE_COCKTAIL);
 
   const [noResults, setNoResults] = useState(false);
@@ -43,6 +43,7 @@ const SearchCocktails = () => {
 
       if (!response.ok) {
         throw new Error("something went wrong!");
+        throw new Error("something went wrong!");
       }
 
       const { drinks } = await response.json();
@@ -55,10 +56,12 @@ const SearchCocktails = () => {
       const cocktailData = drinks.map((cocktail) => {
         const ingredients = [];
 
+
         // Iterate over the ingredient and measurement properties dynamically
         for (let i = 1; i <= 15; i++) {
           const ingredient = cocktail[`strIngredient${i}`];
           const measure = cocktail[`strMeasure${i}`];
+
 
           // Check if the ingredient and measure exist and are not empty
           if (ingredient && measure) {
@@ -68,6 +71,7 @@ const SearchCocktails = () => {
             });
           }
         }
+
 
         return {
           name: cocktail.strDrink,
@@ -153,13 +157,13 @@ const SearchCocktails = () => {
         <h2 className="pt-5">
           {searchedCocktails.length
             ? `Viewing ${searchedCocktails.length} results:`
-            : "Search for a cocktail to begin"}
+            : 'Search for a cocktail to begin'}
         </h2>
         <Row>
           {searchedCocktails.map((cocktail) => {
             return (
               <Col md="10" key={cocktail.drinkId}>
-                <Card border="dark" className="mb-3">
+                <Card border='dark' className="mb-3">
                   {cocktail.image ? (
                     <Card.Img
                       src={cocktail.image}
@@ -168,25 +172,16 @@ const SearchCocktails = () => {
                     />
                   ) : null}
                   <Card.Body>
-                    <Card.Title>
-                      <strong>{cocktail.name}</strong>
-                    </Card.Title>
-                    <p className="small">
-                      <strong>Category:</strong> {cocktail.category}
-                    </p>
-                    <Card.Text>
-                      <strong>Ingredients:</strong>{" "}
-                      <ul>
-                        {cocktail.ingredients.map((ingredient, index) => (
-                          <li key={index}>
-                            {ingredient.name}: {ingredient.measurement}
-                          </li>
-                        ))}
-                      </ul>
-                    </Card.Text>
-                    <Card.Text>
-                      <strong>Instructions:</strong> {cocktail.instructions}
-                    </Card.Text>
+                    <Card.Title><strong>{cocktail.name}</strong></Card.Title>
+                    <p className='small'><strong>Category:</strong> {cocktail.category}</p>
+                    <Card.Text><strong>Ingredients:</strong> <ul>
+          {cocktail.ingredients.map((ingredient, index) => (
+            <li key={index}>
+              {ingredient.name}: {ingredient.measurement}
+            </li>
+          ))}
+        </ul></Card.Text>
+                    <Card.Text><strong>Instructions:</strong> {cocktail.instructions}</Card.Text>
                     {Auth.loggedIn() && (
                       <Button
                         disabled={savedCocktailIds?.some(

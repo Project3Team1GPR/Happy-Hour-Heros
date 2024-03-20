@@ -4,7 +4,7 @@ import { reducer } from './reducers'
 const StoreContext = createContext();
 const { Provider } = StoreContext;
 
-const StoreProvider = ({ value = [], ...props }) => {
+const CocktailProvider = ({ value = [], ...props }) => {
   const [state, dispatch] = useReducer(reducer, {
     products: [],
     cart: [],
@@ -20,4 +20,4 @@ const useStoreContext = () => {
   return useContext(StoreContext);
 };
 
-export { StoreProvider, useStoreContext };
+export { CocktailProvider, useStoreContext };

@@ -6,15 +6,24 @@ import { ADD_USER } from '../utils/mutations';
 
 import Auth from '../utils/auth';
 
+import StripePage from '../pages/Stripe'; // Import your StripePage component
+
+// import { useHistory } from 'react-router-dom';
+
 const SignupForm = () => {
   // set initial form state
   const [userFormData, setUserFormData] = useState({ username: '', email: '', password: '' });
   // set state for form validation
-  const [validated] = useState(false);
+  const [validated, setValidated] = useState(false);
   // set state for alert
   const [showAlert, setShowAlert] = useState(false);
 
   const [addUser, { error }] = useMutation(ADD_USER);
+
+  const [redirectToStripe, setRedirectToStripe] = useState(false); // State to control redirect to Stripe page
+
+
+  // const history = useHistory();
 
   useEffect(() => {
     if (error) {
@@ -25,8 +34,8 @@ const SignupForm = () => {
   }, [error]);
 
   const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setUserFormData({ ...userFormData, [name]: value });
+    const { name, value, checked, type } = event.target;
+    setUserFormData({ ...userFormData, [name]: type === 'checkbox' ? checked : value });
   };
 
   const handleFormSubmit = async (event) => {
@@ -52,6 +61,19 @@ const SignupForm = () => {
       console.log('User data:', user);
 
       Auth.login(data.addUser.token);
+
+      if (userFormData.isPremiumService) {
+        setRedirectToStripe(true); // Set state to redirect to Stripe page
+      }
+
+      //  // If premium service selected, navigate to Stripe page
+      //  if (userFormData.isPremiumService) {
+      //   history.push('/stripe');
+      // } else {
+      //   // If premium service not selected, navigate to home page
+      //   history.push('/');
+      // }
+
     } catch (err) {
       console.error(err);
 
@@ -66,8 +88,16 @@ const SignupForm = () => {
       username: '',
       email: '',
       password: '',
+      isPremiumService: false,
     });
+    setValidated(true);
   };
+
+  if (redirectToStripe) {
+    return <StripePage />;
+  };
+
+  
 
   return (
     <>
@@ -115,6 +145,9 @@ const SignupForm = () => {
             required
           />
           <Form.Control.Feedback type='invalid'>Password is required!</Form.Control.Feedback>
+        </Form.Group>
+        <Form.Group className='mb-3'>
+          <Form.Check type='checkbox' label='Sign up for Premium Service - $2.99/month' name='isPremiumService' checked={userFormData.isPremiumService} onChange={handleInputChange} />
         </Form.Group>
         <Button
           disabled={!(userFormData.username && userFormData.email && userFormData.password)}

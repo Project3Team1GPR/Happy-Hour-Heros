@@ -1,14 +1,39 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Navbar, Nav, Container, Modal, Tab } from 'react-bootstrap';
-import SignUpForm from '../SignupForm';
-import LoginForm from '../LoginForm';
-
-import Auth from '../../utils/auth';
+import { useState, useEffect } from "react";
+import { useLazyQuery } from "@apollo/client";
+import { QUERY_GET_ME } from "../../utils/queries";
+import { Link } from "react-router-dom";
+import { Navbar, Nav, Container, Modal, Tab } from "react-bootstrap";
+import SignUpForm from "../SignupForm";
+import LoginForm from "../LoginForm";
+import { useGlobalContext } from "../../utils/GlobalState";
+import Auth from "../../utils/auth";
 
 const AppNavbar = () => {
+  const [getUser, { loading, error, data }] = useLazyQuery(QUERY_GET_ME);
   // set modal display state
   const [showModal, setShowModal] = useState(false);
+  const [user, setUser] = useGlobalContext();
+
+  useEffect(() => {
+    console.log("STATUS", user, Auth.loggedIn());
+    if (user?._id) {
+      setShowModal(false);
+    }
+  }, [user]);
+
+  useEffect(() => {
+      if (Auth.loggedIn() && !user?._id) {
+        console.log("GETTING PROFILE");
+        getUserFromDb();
+      }
+  }, []);
+
+  const getUserFromDb = async () => {
+    console.log("Really getting profile");
+    const userFromDb = (await getUser()).data.me;
+    console.log("Got PRofile", userFromDb);
+    setUser(userFromDb);
+  };
 
   return (
     <>
@@ -84,14 +109,10 @@ const AppNavbar = () => {
 
 export default AppNavbar;
 
-
-
-
 // OG NAVBAR BELOW
 
 // import Auth from "../../utils/auth";
 // import { Link } from "react-router-dom";
-
 
 // function Nav() {
 

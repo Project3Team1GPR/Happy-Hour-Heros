@@ -3,10 +3,12 @@ import { useMutation } from '@apollo/client';
 import { Link } from 'react-router-dom';
 import { LOGIN } from '../utils/mutations';
 import Auth from '../utils/auth';
+import {useGlobalContext } from "../utils/GlobalState"
 
 function Login(props) {
   const [formState, setFormState] = useState({ email: '', password: '' });
   const [login, { error }] = useMutation(LOGIN);
+  const [user, setUser] = useGlobalContext();
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
@@ -15,6 +17,8 @@ function Login(props) {
         variables: { email: formState.email, password: formState.password },
       });
       const token = mutationResponse.data.login.token;
+      const authUser = mutationResponse.data.login.user;
+      setUser(authUser)
       Auth.login(token);
     } catch (e) {
       console.log(e);

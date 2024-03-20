@@ -18,7 +18,8 @@ const typeDefs = `
   }
 
   type Cocktail {
-    drinkId: ID
+    _id: ID
+    drinkId: String
     name: String
     ingredients: [Ingredient]
     instructions: String
@@ -32,6 +33,8 @@ const typeDefs = `
   }
 
   type Query {
+    cocktails: [Cocktail]
+    users: [User]
    me: User
   }
 
@@ -49,11 +52,12 @@ const typeDefs = `
     category: String
   }
 
+
   type Mutation {
     login(email: String!, password: String!): Auth
     addUser(username: String!, email: String!, password: String!): Auth
     saveCocktail(cocktailInput: SavedCocktailInput): User
-    removeCocktail(drinkId: ID): User
+    removeCocktail(cocktailId: ID): User
   }
 `;
 

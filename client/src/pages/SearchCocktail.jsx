@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 import { Container, Col, Form, Button, Card, Row } from "react-bootstrap";
 
-import Auth from "../utils/auth";
-import { searchCocktails } from "../utils/API";
-import { saveCocktailIds, getSavedCocktailIds } from "../utils/localStorage";
-import { useMutation } from "@apollo/client";
-import { SAVE_COCKTAIL } from "../utils/mutations";
-import SearchForm from "../components/SearchForm";
+import Auth from '../utils/auth';
+import { searchCocktails } from '../utils/API';
+import { saveCocktailIds, getSavedCocktailIds } from '../utils/localStorage';
+import { useMutation } from '@apollo/client';
+import { SAVE_COCKTAIL } from '../utils/mutations';
+import SearchForm from '../components/SearchForm';
+
+import { useGlobalContext } from '../utils/GlobalState';
 
 const SearchCocktails = () => {
   // create state for holding returned google api data
@@ -14,14 +16,16 @@ const SearchCocktails = () => {
   // // create state for holding our search field data
   const [searchInput, setSearchInput] = useState("");
 
-  // create state to hold saved bookId values
-  const [savedCocktailIds, setSavedCocktailIds] = useState(
-    getSavedCocktailIds()
-  );
+  // create state to hold saved drinkId values
+  const [savedCocktailIds, setSavedCocktailIds] = useState(getSavedCocktailIds());
+
 
   const [saveCocktail, { error }] = useMutation(SAVE_COCKTAIL);
 
   const [noResults, setNoResults] = useState(false);
+
+  const [user, setUser] = useGlobalContext();
+
 
   // set up useEffect hook to save `savedCocktailIds` list to localStorage on component unmount
   // learn more here: https://reactjs.org/docs/hooks-effect.html#effects-with-cleanup
@@ -87,11 +91,8 @@ const SearchCocktails = () => {
   };
 
   // create function to handle saving a book to our database
-  const handleSaveCocktail = async (drinkId) => {
+  const handleSaveCocktail = async (cocktail) => {
     // find the book in `searchedBooks` state by the matching id
-    const cocktailToSave = searchedCocktails.find(
-      (cocktail) => cocktail.drinkId === drinkId
-    );
 
     // get token
     const token = Auth.loggedIn() ? Auth.getToken() : null;
@@ -102,15 +103,16 @@ const SearchCocktails = () => {
 
     try {
       const { data } = await saveCocktail({
-        variables: { cocktailInput: { ...cocktailToSave } },
+
+        variables: { cocktailInput: {...cocktail} },
       });
 
       if (!data.saveCocktail) {
         throw new Error("something went wrong!");
       }
-
-      // if cocktail successfully saves to user's account, save book id to state
-      setSavedCocktailIds([...savedCocktailIds, cocktailToSave.drinkId]);
+      setUser(data.saveCocktail)
+      // if cocktail successfully saves to user's account, save drink id to state
+      // setSavedCocktailIds([...savedCocktailIds, cocktailToSave.drinkId]);
     } catch (err) {
       console.error(err);
     }
@@ -189,18 +191,14 @@ const SearchCocktails = () => {
                     </Card.Text>
                     {Auth.loggedIn() && (
                       <Button
-                        disabled={savedCocktailIds?.some(
-                          (savedId) => savedId === cocktail.drinkId
-                        )}
-                        className="btn-block btn-info"
-                        onClick={() => handleSaveCocktail(cocktail.drinkId)}
-                      >
-                        {savedCocktailIds?.some(
-                          (savedCocktailId) =>
-                            savedCocktailId === cocktail.drinkId
-                        )
-                          ? "This cocktail has already been saved!"
-                          : "Save this Cocktail!"}
+
+                        disabled={savedCocktailIds?.some((savedId) => savedId === cocktail.drinkId)}
+                        className='btn-block btn-info'
+                        onClick={() => handleSaveCocktail(cocktail)}>
+                        {user.savedCocktails?.some((sc) => sc.drinkId === cocktail.drinkId)
+                          ? 'This cocktail has already been saved!'
+                          : 'Save this Cocktail!'}
+
                       </Button>
                     )}
                   </Card.Body>

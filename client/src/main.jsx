@@ -14,6 +14,7 @@ import OrderHistory from "./pages/OrderHistory";
 import SearchCocktail from "./pages/SearchCocktail.jsx";
 import SavedCocktails from "./pages/SavedCocktails.jsx";
 import About from "./pages/About/About.jsx";
+import NewPostPage from "./pages/NewPagePost.jsx"
 
 const router = createBrowserRouter([
   {
@@ -57,6 +58,10 @@ const router = createBrowserRouter([
         path: "/about",
         element: <About />,
       },
+      {
+        path:"/post",
+        element: <NewPostPage />
+      }
     ],
   },
 ]);

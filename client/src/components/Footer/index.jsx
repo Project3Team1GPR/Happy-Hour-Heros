@@ -5,23 +5,23 @@ import "./Footer.css";
 
 export default function Footer() {
   return (
-  <footer className="bg-dark text-light py-2 text-center fixed-bottom mt-5">
+  <footer className="bg-dark text-light py-2 text-center">
       <div className="container footer-icons">
-        <a
+        Gavin: <a
           href="https://linkedin.com/in/gavinpmeyer"
           target="_blank"
           rel="noopener noreferrer"
         >
           <FontAwesomeIcon icon={faLinkedin} />
         </a>
-        <a
+        Jenni: <a
           href="https://www.linkedin.com/in/hjennip"
           target="_blank"
           rel="noopener noreferrer"
         >
           <FontAwesomeIcon icon={faLinkedin} />
         </a>
-        <a
+        Rachel: <a
           href="https://www.linkedin.com/in/rjv123"
           target="_blank"
           rel="noopener noreferrer"

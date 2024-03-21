@@ -18,8 +18,8 @@ const resolvers = {
   },
 
   Mutation: {
-    addUser: async (parent, { username, email, password }) => {
-      const newUser = (await User.create({ username, email, password }));
+    addUser: async (parent, { username, email, password, isPremiumService }) => {
+      const newUser = (await User.create({ username, email, password, isPremiumService }));
       const user = await User.findById(newUser._id).populate("savedCocktails");
       const token = signToken(user);
 

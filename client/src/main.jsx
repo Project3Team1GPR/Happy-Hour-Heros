@@ -13,6 +13,7 @@ import Success from './pages/Success';
 import OrderHistory from './pages/OrderHistory';
 import SearchCocktail from './pages/SearchCocktail.jsx';
 import SavedCocktails from './pages/SavedCocktails.jsx';
+import StripePage from './pages/Stripe.jsx';
 
 const router = createBrowserRouter([
   {
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
       {
         path: '/saved',
         element: <SavedCocktails />
+      },
+      {
+        path: '/stripe',
+        element: <StripePage />
       }
     ]
   }

@@ -10,6 +10,7 @@ const typeDefs = `
     email: String
     cocktailCount: Int
     savedCocktails: [Cocktail]
+    isPremiumService: Boolean
   }
 
   type Ingredient {
@@ -55,7 +56,7 @@ const typeDefs = `
 
   type Mutation {
     login(email: String!, password: String!): Auth
-    addUser(username: String!, email: String!, password: String!): Auth
+    addUser(username: String!, email: String!, password: String!, isPremiumService: Boolean): Auth
     saveCocktail(cocktailInput: SavedCocktailInput): User
     removeCocktail(cocktailId: ID): User
   }

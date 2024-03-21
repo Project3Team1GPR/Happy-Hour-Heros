@@ -1,3 +1,5 @@
+// REMOVE
+
 import { useEffect } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 import { useLazyQuery } from '@apollo/client';

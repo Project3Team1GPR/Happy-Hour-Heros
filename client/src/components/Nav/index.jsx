@@ -35,6 +35,11 @@ const AppNavbar = () => {
     setUser(userFromDb);
   };
 
+  const handleLinkClick = () => {
+    setShowModal(false); // Close the modal when a link is selected
+    document.querySelector('.navbar-toggler').click(); // Close the navbar toggler in responsive mode
+  };
+
   return (
     <>
       <Navbar bg="dark" variant="dark" expand="lg">
@@ -45,13 +50,13 @@ const AppNavbar = () => {
           <Navbar.Toggle aria-controls="navbar" />
           <Navbar.Collapse id="navbar" className="flex-row-reverse">
             <Nav className="ml-auto d-flex">
-              <Nav.Link as={Link} to="/search">
+              <Nav.Link as={Link} to="/search" onClick={handleLinkClick}>
                 Search For Cocktails
               </Nav.Link>
               {/* if user is logged in show saved cocktails and logout */}
               {Auth.loggedIn() ? (
                 <>
-                  <Nav.Link as={Link} to="/saved">
+                  <Nav.Link as={Link} to="/saved" onClick={handleLinkClick}>
                     See Your Cocktails
                   </Nav.Link>
                   <Nav.Link onClick={Auth.logout}>Logout</Nav.Link>

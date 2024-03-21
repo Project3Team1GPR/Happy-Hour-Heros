@@ -1,7 +1,14 @@
-.about-container {
+/* .about-container {
   margin-top: 100px;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: space-evenly;
   gap: 100px;
+} */
+
+.members{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin-top: 100px;
 }

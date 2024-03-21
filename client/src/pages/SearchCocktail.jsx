@@ -160,7 +160,7 @@ const SearchCocktails = () => {
         <Row>
           {searchedCocktails.map((cocktail) => {
             return (
-              <Col md="3" lg="2" key={cocktail.drinkId}>
+              <Col md="4" style={{marginTop: "15px"}} key={cocktail.drinkId}>
                 <Card
                   border="dark"
                   className="mb-3"

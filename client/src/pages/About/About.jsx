@@ -14,18 +14,6 @@ function About() {
         <h1 className="text-center">Vision</h1>
         <h4 className="text-center">add later</h4>
       </div>
-      <div>
-        <h1 className="text-center">Jenni Park</h1>
-        <h4 className="text-center">hey girl, add your bio</h4>
-      </div>
-      <div>
-        <h1 className="text-center">Rachel V</h1>
-        <h4 className="text-center">things</h4>
-      </div>
-      <div>
-        <h1 className="text-center">Gavin Meyer</h1>
-        <h4 className="text-center">pls put things here</h4>
-      </div>
     </div>
   );
 }

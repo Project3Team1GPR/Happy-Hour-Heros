@@ -22,10 +22,10 @@ const AppNavbar = () => {
   }, [user]);
 
   useEffect(() => {
-      if (Auth.loggedIn() && !user?._id) {
-        console.log("GETTING PROFILE");
-        getUserFromDb();
-      }
+    if (Auth.loggedIn() && !user?._id) {
+      console.log("GETTING PROFILE");
+      getUserFromDb();
+    }
   }, []);
 
   const getUserFromDb = async () => {
@@ -33,6 +33,16 @@ const AppNavbar = () => {
     const userFromDb = (await getUser()).data.me;
     console.log("Got PRofile", userFromDb);
     setUser(userFromDb);
+  };
+
+  const handleLinkClick = () => {
+    setShowModal(false); // Close the modal when a link is selected
+    document.querySelector('.navbar-toggler').click(); // Close the navbar toggler in responsive mode
+  };
+
+  const handleLoginSignupClick = () => {
+    setShowModal(true); // Open the modal for Login/Sign Up
+    document.querySelector('.navbar-toggler').click(); // Close the navbar toggler in responsive mode
   };
 
   return (
@@ -45,19 +55,22 @@ const AppNavbar = () => {
           <Navbar.Toggle aria-controls="navbar" />
           <Navbar.Collapse id="navbar" className="flex-row-reverse">
             <Nav className="ml-auto d-flex">
-              <Nav.Link as={Link} to="/search">
+              <Nav.Link as={Link} to="/about" onClick={handleLinkClick}>
+                About
+              </Nav.Link>
+              <Nav.Link as={Link} to="/search" onClick={handleLinkClick}>
                 Search For Cocktails
               </Nav.Link>
               {/* if user is logged in show saved cocktails and logout */}
               {Auth.loggedIn() ? (
                 <>
-                  <Nav.Link as={Link} to="/saved">
+                  <Nav.Link as={Link} to="/saved" onClick={handleLinkClick}>
                     See Your Cocktails
                   </Nav.Link>
                   <Nav.Link onClick={Auth.logout}>Logout</Nav.Link>
                 </>
               ) : (
-                <Nav.Link onClick={() => setShowModal(true)}>
+                <Nav.Link onClick={handleLoginSignupClick}>
                   Login/Sign Up
                 </Nav.Link>
               )}
@@ -79,14 +92,15 @@ const AppNavbar = () => {
               <Nav variant="pills">
                 <Nav.Item>
                   {/* modal button colors HERE will have to figure out active an inactive*/}
-                  <Nav.Link style={{backgroundColor: "black"}} eventKey="login">
+                  <Nav.Link
+                    style={{ backgroundColor: "black" }}
+                    eventKey="login"
+                  >
                     Login
                   </Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                  <Nav.Link  eventKey="signup">
-                    Sign Up
-                  </Nav.Link>
+                  <Nav.Link eventKey="signup">Sign Up</Nav.Link>
                 </Nav.Item>
               </Nav>
             </Modal.Title>

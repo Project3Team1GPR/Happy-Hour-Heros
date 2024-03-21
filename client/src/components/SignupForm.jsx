@@ -9,7 +9,7 @@ import { useGlobalContext } from '../utils/GlobalState';
 const SignupForm = () => {
   const navigate = useNavigate();
   // set initial form state
-  const [userFormData, setUserFormData] = useState({ username: '', email: '', password: '' });
+  const [userFormData, setUserFormData] = useState({ username: '', email: '', password: '', isPremiumService: false });
   // set state for form validation
   const [validated] = useState(false);
   // set state for alert
@@ -26,8 +26,8 @@ const SignupForm = () => {
   }, [error]);
 
   const handleInputChange = (event) => {
-    const { name, value } = event.target;
-    setUserFormData({ ...userFormData, [name]: value });
+    const { name, value, checked, type } = event.target;
+    setUserFormData({ ...userFormData, [name]: type === 'checkbox' ? checked : value });
   };
 
   const handleFormSubmit = async (event) => {
@@ -42,7 +42,7 @@ const SignupForm = () => {
 
     try {
       const { data } = await addUser({
-        variables: { ...userFormData },
+        variables: { ...userFormData, isPremiumService: false },
       });
 
       if (!data.addUser.token) {
@@ -53,7 +53,13 @@ const SignupForm = () => {
       setUser(data.addUser.user);
       console.log(user);
       Auth.login(data.addUser.token);
-      navigate("/saved");
+     
+      if (userFormData.isPremiumService) {
+        navigate("/stripe"); // Redirect to Stripe page
+      } else {
+        navigate("/saved"); // Redirect to saved page
+      }
+      
     } catch (err) {
       console.error(err);
 
@@ -68,6 +74,7 @@ const SignupForm = () => {
       username: '',
       email: '',
       password: '',
+      isPremiumService: false,
     });
   };
 
@@ -117,6 +124,15 @@ const SignupForm = () => {
             required
           />
           <Form.Control.Feedback type='invalid'>Password is required!</Form.Control.Feedback>
+        </Form.Group>
+        <Form.Group className='mb-3'>
+          <Form.Check 
+            type='checkbox' 
+            label='Sign up for Premium Service - $2.99/month' 
+            name='isPremiumService' 
+            checked={userFormData.isPremiumService} 
+            onChange={handleInputChange} 
+          />
         </Form.Group>
         <Button
           disabled={!(userFormData.username && userFormData.email && userFormData.password)}

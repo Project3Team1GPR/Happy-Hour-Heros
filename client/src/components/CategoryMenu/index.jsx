@@ -1,3 +1,4 @@
+// REMOVE
 import { useEffect } from 'react';
 import { useQuery } from '@apollo/client';
 import { useGlobalContext } from '../../utils/GlobalState';

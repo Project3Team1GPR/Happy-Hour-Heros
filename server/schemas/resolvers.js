@@ -25,6 +25,11 @@ const resolvers = {
 
       return { token, user };
     },
+    premium: async ( parent, args, context) => {
+      const updateUser = (await User.findOneAndUpdate({_id: context.user._id}, { isPremiumService: true }, { new: true }));
+      
+      return updateUser;
+    },
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email }).populate("savedCocktails");
       console.log("USER", user)

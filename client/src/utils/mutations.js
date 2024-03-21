@@ -101,6 +101,30 @@ export const ADD_USER = gql`
   }
 `;
 
+export const SET_PREMIUM = gql`
+mutation premium {
+  premium {
+    _id
+    cocktailCount
+    email
+    isPremiumService
+    username
+    savedCocktails {
+      _id
+      category
+      drinkId
+      image
+      instructions
+      name
+      ingredients {
+        name
+        measurement
+      }
+    }
+  }
+}
+`;
+
 // export const ADD_ORDER = gql`
 //   mutation addOrder($products: [ID]!) {
 //     addOrder(products: $products) {

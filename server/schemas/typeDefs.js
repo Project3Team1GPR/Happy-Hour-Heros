@@ -59,6 +59,7 @@ const typeDefs = `
     addUser(username: String!, email: String!, password: String!, isPremiumService: Boolean): Auth
     saveCocktail(cocktailInput: SavedCocktailInput): User
     removeCocktail(cocktailId: ID): User
+    premium: User
   }
 `;
 

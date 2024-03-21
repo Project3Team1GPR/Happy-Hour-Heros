@@ -22,10 +22,10 @@ const AppNavbar = () => {
   }, [user]);
 
   useEffect(() => {
-      if (Auth.loggedIn() && !user?._id) {
-        console.log("GETTING PROFILE");
-        getUserFromDb();
-      }
+    if (Auth.loggedIn() && !user?._id) {
+      console.log("GETTING PROFILE");
+      getUserFromDb();
+    }
   }, []);
 
   const getUserFromDb = async () => {
@@ -45,6 +45,9 @@ const AppNavbar = () => {
           <Navbar.Toggle aria-controls="navbar" />
           <Navbar.Collapse id="navbar" className="flex-row-reverse">
             <Nav className="ml-auto d-flex">
+              <Nav.Link as={Link} to="/about">
+                About
+              </Nav.Link>
               <Nav.Link as={Link} to="/search">
                 Search For Cocktails
               </Nav.Link>
@@ -79,14 +82,15 @@ const AppNavbar = () => {
               <Nav variant="pills">
                 <Nav.Item>
                   {/* modal button colors HERE will have to figure out active an inactive*/}
-                  <Nav.Link style={{backgroundColor: "black"}} eventKey="login">
+                  <Nav.Link
+                    style={{ backgroundColor: "black" }}
+                    eventKey="login"
+                  >
                     Login
                   </Nav.Link>
                 </Nav.Item>
                 <Nav.Item>
-                  <Nav.Link  eventKey="signup">
-                    Sign Up
-                  </Nav.Link>
+                  <Nav.Link eventKey="signup">Sign Up</Nav.Link>
                 </Nav.Item>
               </Nav>
             </Modal.Title>

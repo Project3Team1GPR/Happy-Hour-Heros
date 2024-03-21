@@ -116,10 +116,6 @@ const SearchCocktails = () => {
       console.error(err);
     }
   };
-  const chunk = (arr, size) =>
-    Array.from({ length: Math.ceil(arr.length / size) }, (v, i) =>
-      arr.slice(i * size, i * size + size)
-    ); //this breaks a list into smaller lists of equal size
 
   return (
     <>
@@ -160,67 +156,64 @@ const SearchCocktails = () => {
             ? `Viewing ${searchedCocktails.length} results:`
             : "Search for a cocktail to begin"}
         </h2>
-        {chunk(searchedCocktails, 4).map((chunk, index) => { //calling const chunk lines 119-122
-          return (
-            <Row key={index}>
-              {chunk.map((cocktail) => {
-                return (
-                  <Col md="3" key={cocktail.drinkId}> 
-                    <Card
-                      border="dark"
-                      className="mb-3"
-                      style={{ width: "100%" }}
-                    >
-                      {cocktail.image ? (
-                        <Card.Img
-                          src={cocktail.image}
-                          alt={`The cover for ${cocktail.name}`}
-                          variant="top"
-                        />
-                      ) : null}
-                      <Card.Body>
-                        <Card.Title>
-                          <strong>{cocktail.name}</strong>
-                        </Card.Title>
-                        <p className="small">
-                          <strong>Category:</strong> {cocktail.category}
-                        </p>
-                        <Card.Text>
-                          <strong>Ingredients:</strong>{" "}
-                          <ul>
-                            {cocktail.ingredients.map((ingredient, index) => (
-                              <li key={index}>
-                                {ingredient.name}: {ingredient.measurement}
-                              </li>
-                            ))}
-                          </ul>
-                        </Card.Text>
-                        <Card.Text>
-                          <strong>Instructions:</strong> {cocktail.instructions}
-                        </Card.Text>
-                        {Auth.loggedIn() && (
-                          <Button
-                            disabled={savedCocktailIds?.some(
-                              (savedId) => savedId === cocktail.drinkId
-                            )}
-                            className="btn-block btn-info"
-                            onClick={() => handleSaveCocktail(cocktail)}
-                          >
-                            {user.savedCocktails?.some(
-                              (sc) => sc.drinkId === cocktail.drinkId
-                            )
-                              ? "This cocktail has already been saved!"
-                              : "Save this Cocktail!"}
-                          </Button>
+
+        <Row>
+          {searchedCocktails.map((cocktail) => {
+            return (
+              <Col md="3" lg="2" key={cocktail.drinkId}>
+                <Card
+                  border="dark"
+                  className="mb-3"
+                  style={{ width: "100%", height: "100%" }}
+                >
+                  {cocktail.image ? (
+                    <Card.Img
+                      src={cocktail.image}
+                      alt={`The cover for ${cocktail.name}`}
+                      variant="top"
+                    />
+                  ) : null}
+                  <Card.Body>
+                    <Card.Title>
+                      <strong>{cocktail.name}</strong>
+                    </Card.Title>
+                    <p className="small">
+                      <strong>Category:</strong> {cocktail.category}
+                    </p>
+                    <Card.Text>
+                      <strong>Ingredients:</strong>{" "}
+                      <ul>
+                        {cocktail.ingredients.map((ingredient, index) => (
+                          <li key={index}>
+                            {ingredient.name}: {ingredient.measurement}
+                          </li>
+                        ))}
+                      </ul>
+                    </Card.Text>
+                    <Card.Text>
+                      <strong>Instructions:</strong> {cocktail.instructions}
+                    </Card.Text>
+                    {Auth.loggedIn() && (
+                      <Button
+                        disabled={savedCocktailIds?.some(
+                          (savedId) => savedId === cocktail.drinkId
                         )}
-                      </Card.Body>
-                    </Card>
-                  </Col>
-                );
-              })}
-            </Row>
-          );
-        })}
+                        className="btn-block btn-info"
+                        onClick={() => handleSaveCocktail(cocktail)}
+                      >
+                        {user.savedCocktails?.some(
+                          (sc) => sc.drinkId === cocktail.drinkId
+                        )
+                          ? "This cocktail has already been saved!"
+                          : "Save this Cocktail!"}
+                      </Button>
+                    )}
+                  </Card.Body>
+                </Card>
+              </Col>
+            );
+          })}
+        </Row>
       </Container>
     </>
   );

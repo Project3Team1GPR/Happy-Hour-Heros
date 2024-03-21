@@ -18,7 +18,7 @@ const SearchForm = ({ handleFormSubmit }) => {
                   onChange={(e) => setSearchInput(e.target.value)}
                   type="text"
                   size="lg"
-                  placeholder="search the cocktail codex"
+                  placeholder="search for cocktail"
                 />
               </Col>
               <Col xs={12} md={4}>

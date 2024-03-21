@@ -18,12 +18,17 @@ const resolvers = {
   },
 
   Mutation: {
-    addUser: async (parent, { username, email, password }) => {
-      const newUser = (await User.create({ username, email, password }));
+    addUser: async (parent, { username, email, password, isPremiumService }) => {
+      const newUser = (await User.create({ username, email, password, isPremiumService }));
       const user = await User.findById(newUser._id).populate("savedCocktails");
       const token = signToken(user);
 
       return { token, user };
+    },
+    premium: async ( parent, args, context) => {
+      const updateUser = (await User.findOneAndUpdate({_id: context.user._id}, { isPremiumService: true }, { new: true }));
+      
+      return updateUser;
     },
     login: async (parent, { email, password }) => {
       const user = await User.findOne({ email }).populate("savedCocktails");

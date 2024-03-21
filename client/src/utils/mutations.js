@@ -8,6 +8,7 @@ export const LOGIN = gql`
       _id
       username
       email
+      isPremiumService
       savedCocktails {
         _id
         category
@@ -32,6 +33,7 @@ export const SAVE_COCKTAIL = gql`
       email
       username
       cocktailCount
+      isPremiumService
       savedCocktails {
         _id
         drinkId
@@ -55,6 +57,7 @@ export const REMOVE_COCKTAIL = gql`
       email
       username
       cocktailCount
+      isPremiumService
       savedCocktails {
         _id
         drinkId
@@ -72,14 +75,15 @@ export const REMOVE_COCKTAIL = gql`
 `;
 
 export const ADD_USER = gql`
-  mutation addUser($username: String!, $email: String!, $password: String!) {
-    addUser(username: $username, email: $email, password: $password) {
+  mutation addUser($username: String!, $email: String!, $password: String!, $isPremiumService: Boolean) {
+    addUser(username: $username, email: $email, password: $password, isPremiumService: $isPremiumService) {
       token
       user {
         _id
         username
         email
         cocktailCount
+        isPremiumService
         savedCocktails {
           _id
           category
@@ -97,23 +101,47 @@ export const ADD_USER = gql`
   }
 `;
 
-export const ADD_ORDER = gql`
-  mutation addOrder($products: [ID]!) {
-    addOrder(products: $products) {
-      purchaseDate
-      products {
-        _id
+export const SET_PREMIUM = gql`
+mutation premium {
+  premium {
+    _id
+    cocktailCount
+    email
+    isPremiumService
+    username
+    savedCocktails {
+      _id
+      category
+      drinkId
+      image
+      instructions
+      name
+      ingredients {
         name
-        description
-        price
-        quantity
-        category {
-          name
-        }
+        measurement
       }
     }
   }
+}
 `;
+
+// export const ADD_ORDER = gql`
+//   mutation addOrder($products: [ID]!) {
+//     addOrder(products: $products) {
+//       purchaseDate
+//       products {
+//         _id
+//         name
+//         description
+//         price
+//         quantity
+//         category {
+//           name
+//         }
+//       }
+//     }
+//   }
+// `;
 
 // export const ADD_USER = gql`
 //   mutation addUser(

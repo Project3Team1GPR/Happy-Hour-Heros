@@ -3,17 +3,19 @@ import "./index.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import App from "./App.jsx";
-import Home from "./pages/Home";
-import Detail from "./pages/Detail";
-import NoMatch from "./pages/NoMatch";
-import Login from "./pages/Login";
-import Signup from "./pages/Signup";
-import Success from "./pages/Success";
-import OrderHistory from "./pages/OrderHistory";
-import SearchCocktail from "./pages/SearchCocktail.jsx";
-import SavedCocktails from "./pages/SavedCocktails.jsx";
+import App from './App.jsx';
+import Home from './pages/Home';
+import Detail from './pages/Detail';
+import NoMatch from './pages/NoMatch';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
+import Success from './pages/Success';
+import OrderHistory from './pages/OrderHistory';
+import SearchCocktail from './pages/SearchCocktail.jsx';
+import SavedCocktails from './pages/SavedCocktails.jsx';
+import StripePage from './pages/Stripe.jsx';
 import About from "./pages/About/About.jsx";
+import NewPostPage from "./pages/NewPagePost.jsx"
 
 const router = createBrowserRouter([
   {
@@ -57,6 +59,18 @@ const router = createBrowserRouter([
         path: "/about",
         element: <About />,
       },
+      {
+        path: '/stripe',
+        element: <StripePage />
+      },
+      {
+        path:"/post",
+        element: <NewPostPage />
+      },
+      {
+        path: "/*",
+        element: <NoMatch />
+      }
     ],
   },
 ]);

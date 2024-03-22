@@ -36,5 +36,9 @@ export const QUERY_GET_POSTS = gql`
       createdAt
       updatedAt
     }
+    me {
+      _id
+      username
+    }
   }
 `;

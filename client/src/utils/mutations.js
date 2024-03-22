@@ -141,3 +141,18 @@ export const CREATE_POST = gql`
   }
 `;
 
+export const REMOVE_POST = gql`
+  mutation removePost($postId: ID!) {
+    removePost(postId: $postId) {
+      _id
+      title
+      content
+      author {
+        _id
+        username
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;

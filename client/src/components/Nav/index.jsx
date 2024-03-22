@@ -58,6 +58,9 @@ const AppNavbar = () => {
               <Nav.Link as={Link} to="/about" onClick={handleLinkClick}>
                 About
               </Nav.Link>
+              <Nav.Link as={Link} to="/post" onClick={handleLinkClick}>
+                Post
+              </Nav.Link>
               <Nav.Link as={Link} to="/search" onClick={handleLinkClick}>
                 Search For Cocktails
               </Nav.Link>

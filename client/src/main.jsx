@@ -15,6 +15,7 @@ import SearchCocktail from './pages/SearchCocktail.jsx';
 import SavedCocktails from './pages/SavedCocktails.jsx';
 import StripePage from './pages/Stripe.jsx';
 import About from "./pages/About/About.jsx";
+import NewPostPage from "./pages/NewPagePost.jsx"
 
 const router = createBrowserRouter([
   {
@@ -61,6 +62,14 @@ const router = createBrowserRouter([
       {
         path: '/stripe',
         element: <StripePage />
+      },
+      {
+        path:"/post",
+        element: <NewPostPage />
+      },
+      {
+        path: "/*",
+        element: <NoMatch />
       }
     ],
   },

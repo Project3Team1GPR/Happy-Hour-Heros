@@ -66,6 +66,10 @@ const router = createBrowserRouter([
       {
         path:"/post",
         element: <NewPostPage />
+      },
+      {
+        path: "/*",
+        element: <NoMatch />
       }
     ],
   },

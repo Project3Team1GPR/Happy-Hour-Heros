@@ -1,80 +1,82 @@
-import React from 'react';
+import React, { useState } from "react";
+import { useMutation } from "@apollo/client";
+import { CREATE_POST } from "../utils/mutations";
+import { QUERY_GET_POSTS } from "../utils/queries";
 
-class NewPost extends React.Component {
-  newPost = async (e) => {
+function NewPostForm() {
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [createPost, { loading, error }] = useMutation(CREATE_POST, {
+    // Update the cache after the mutation is successful
+    update(cache, { data: { createPost } }) {
+      // Read the existing posts from the cache
+      const { posts } = cache.readQuery({ query: QUERY_GET_POSTS });
+      // Update the posts array with the newly created post
+      cache.writeQuery({
+        query: QUERY_GET_POSTS,
+        data: { posts: [createPost, ...posts] }, // Prepend the new post to the existing posts
+      });
+    },
+  });
+
+  // Handle form submission
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Get form data from state
-    const { title, content } = this.state;
+    try {
+      // Execute the createPost mutation with the provided variables
+      const { data } = await createPost({
+        variables: {
+          postInput: { title, content },
+        },
+      });
 
-    if (title && content) {
-      try {
-        // Make API call
-        await fetch("/api/posts", {
-          method: "POST",
-          body: JSON.stringify({
-            title: title,
-            contents: content,
-          }),
-          headers: { "Content-Type": "application/json" },
-        });
+      // Handle successful mutation response
+      console.log("New post created:", data.createPost);
 
-        // Redirect after successful submission
-        document.location.replace("/dashboard");
-      } catch (error) {
-        console.error("Error submitting post:", error);
-      }
-    } else {
-      alert("Please enter both title and content.");
+      // Clear form fields after successful submission
+      setTitle("");
+      setContent("");
+    } catch (err) {
+      // Handle mutation error
+      console.error("Error creating post:", err);
     }
   };
 
-  // Define initial state
-  state = {
-    title: '',
-    content: ''
-  };
+  return (
+    <div className="container">
+  <div className="row">
+    <div className="col-md-6 mx-auto">
+      <div className="border border-dark rounded p-4 d-flex justify-content-center">
+        <form onSubmit={handleSubmit} className="w-100">
+          <div className="mb-3">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Title"
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
+          </div>
+          <div className="mb-3">
+            <textarea
+              className="form-control"
+              rows="5"
+              placeholder="Content"
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+            />
+          </div>
+          <button type="submit" className="btn btn-primary">Create Post</button>
+          {loading && <p>Loading...</p>}
+          {error && <p>Error creating post: {error.message}</p>}
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
 
-  // Update state as user types
-  handleChange = (e) => {
-    this.setState({
-      [e.target.id]: e.target.value
-    });
-  };
-
-  render() {
-    return (
-      <section className="card border-dark text-center mt-4">
-        <h1 className="mt-4">Create New Post</h1>
-        <div className="card-body">
-          <form id="new-post" onSubmit={this.newPost}>
-            <div className="mb-3">
-              <label htmlFor="title" className="form-label">Title:</label>
-              <input 
-                type="text" 
-                className="form-control" 
-                id="title" 
-                placeholder="Enter Post Title" 
-                value={this.state.title} 
-                onChange={this.handleChange} 
-              />
-            </div>
-            <div className="mb-3">
-              <label htmlFor="content" className="form-label">Content:</label>
-              <textarea 
-                className="form-control" 
-                id="content" 
-                placeholder="Write your post here" 
-                value={this.state.content} 
-                onChange={this.handleChange} 
-              />
-            </div>
-            <button type="submit" className="btn btn-primary" style={{ backgroundColor: 'black', color: '#ffffff' }}>Create Post</button>
-          </form>
-        </div>
-      </section>
-    );
-  }
+  );
 }
 
-export default NewPost;
+export default NewPostForm;

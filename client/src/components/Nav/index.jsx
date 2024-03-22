@@ -37,12 +37,12 @@ const AppNavbar = () => {
 
   const handleLinkClick = () => {
     setShowModal(false); // Close the modal when a link is selected
-    document.querySelector('.navbar-toggler').click(); // Close the navbar toggler in responsive mode
+    document.querySelector(".navbar-toggler").click(); // Close the navbar toggler in responsive mode
   };
 
   const handleLoginSignupClick = () => {
     setShowModal(true); // Open the modal for Login/Sign Up
-    document.querySelector('.navbar-toggler').click(); // Close the navbar toggler in responsive mode
+    document.querySelector(".navbar-toggler").click(); // Close the navbar toggler in responsive mode
   };
 
   return (
@@ -58,15 +58,15 @@ const AppNavbar = () => {
               <Nav.Link as={Link} to="/about" onClick={handleLinkClick}>
                 About
               </Nav.Link>
-              <Nav.Link as={Link} to="/post" onClick={handleLinkClick}>
-                Post
-              </Nav.Link>
               <Nav.Link as={Link} to="/search" onClick={handleLinkClick}>
                 Search For Cocktails
               </Nav.Link>
               {/* if user is logged in show saved cocktails and logout */}
               {Auth.loggedIn() ? (
                 <>
+                  <Nav.Link as={Link} to="/post" onClick={handleLinkClick}>
+                    Post
+                  </Nav.Link>
                   <Nav.Link as={Link} to="/saved" onClick={handleLinkClick}>
                     See Your Cocktails
                   </Nav.Link>

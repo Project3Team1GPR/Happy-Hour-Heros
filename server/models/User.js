@@ -27,6 +27,10 @@ const userSchema = new Schema({
   savedCocktails:[{
     type: Schema.Types.ObjectId,
     ref: "cocktail"
+  }],
+  posts: [{
+    type: Schema.Types.ObjectId,
+    ref: "Post" // Reference to Post model
   }]
 },
 {
@@ -56,6 +60,6 @@ userSchema.virtual('cocktailCount').get(function () {
   return this.savedCocktails.length;
 });
 
-const User = mongoose.model('user', userSchema);
+const User = mongoose.model('User', userSchema);
 
 module.exports = User;

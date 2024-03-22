@@ -1,3 +1,5 @@
+// REMOVE
+
 import { useEffect } from 'react';
 import ProductItem from '../ProductItem';
 import { useGlobalContext } from '../../utils/GlobalState';

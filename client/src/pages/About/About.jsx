@@ -6,6 +6,7 @@ import "./About.css";
 function About() {
   return (
     <div className="about-container">
+
       <div className="vision">
         <div className="container">
           <div className="about-div">
@@ -85,6 +86,7 @@ function About() {
             </Card.Body>
           </Card>
         </div>
+
       </div>
     </div>
   );

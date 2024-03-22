@@ -93,7 +93,7 @@ const SavedCocktails = () => {
                         </li>
                       ))}
                     </ul></Card.Text>
-                    <Card.Text><strong>Instructions:</strong>{cocktail.instructions}</Card.Text>
+                    <Card.Text><strong>Instructions: </strong>{cocktail.instructions}</Card.Text>
                     <Button
                       className="btn-block btn-danger"
                       onClick={() => handleDeleteCocktail(cocktail)}

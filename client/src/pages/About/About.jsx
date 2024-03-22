@@ -1,12 +1,13 @@
 import React from "react";
 import Card from "react-bootstrap/Card";
 import ListGroup from "react-bootstrap/ListGroup";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faLinkedin, faGithub } from "@fortawesome/free-brands-svg-icons";
 import "./About.css";
 
 function About() {
   return (
     <div className="about-container">
-
       <div className="vision">
         <div className="container">
           <div className="about-div">
@@ -36,7 +37,7 @@ function About() {
       </div>
 
       <div className="members">
-        <div>
+        <div className="link-icons">
           <Card style={{ width: "20rem" }}>
             <Card.Img
               variant="top"
@@ -47,13 +48,25 @@ function About() {
               <Card.Text>Hi I'm Jenni.</Card.Text>
             </Card.Body>
             <Card.Body>
-              <Card.Link href="#">Github</Card.Link>
-              <Card.Link href="#">LinkedIn</Card.Link>
+              <a
+                href="https://github.com/hjenp22"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FontAwesomeIcon icon={faGithub} />
+              </a>
+              <a
+                href="https://www.linkedin.com/in/hjennip"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FontAwesomeIcon icon={faLinkedin} />
+              </a>
             </Card.Body>
           </Card>
         </div>
 
-        <div>
+        <div className="link-icons">
           <Card style={{ width: "20rem" }}>
             <Card.Img
               variant="top"
@@ -64,13 +77,25 @@ function About() {
               <Card.Text>Hi I'm Rachel.</Card.Text>
             </Card.Body>
             <Card.Body>
-              <Card.Link href="#">Github</Card.Link>
-              <Card.Link href="#">LinkedIn</Card.Link>
+              <a
+                href="https://github.com/1122c"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FontAwesomeIcon icon={faGithub} />
+              </a>
+              <a
+                href="https://www.linkedin.com/in/rjv123"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FontAwesomeIcon icon={faLinkedin} />
+              </a>
             </Card.Body>
           </Card>
         </div>
 
-        <div>
+        <div className="link-icons">
           <Card style={{ width: "20rem" }}>
             <Card.Img
               variant="top"
@@ -81,12 +106,23 @@ function About() {
               <Card.Text>Hi I'm Gavin.</Card.Text>
             </Card.Body>
             <Card.Body>
-              <Card.Link href="#">Github</Card.Link>
-              <Card.Link href="#">LinkedIn</Card.Link>
+              <a
+                href="https://github.com/gmeyer24"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FontAwesomeIcon icon={faGithub} />
+              </a>
+              <a
+                href="https://linkedin.com/in/gavinpmeyer"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <FontAwesomeIcon icon={faLinkedin} />
+              </a>
             </Card.Body>
           </Card>
         </div>
-
       </div>
     </div>
   );

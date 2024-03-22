@@ -1,30 +1,23 @@
-// import { useState } from "react";
-import { useQuery, useMutation } from '@apollo/client';
+import { useQuery, useMutation } from "@apollo/client";
 import { Container, Card, Button, Row, Col } from "react-bootstrap";
 
 import Auth from "../utils/auth";
 import { removeCocktailId } from "../utils/localStorage";
 import { QUERY_GET_ME } from "../utils/queries";
 import { REMOVE_COCKTAIL } from "../utils/mutations";
-import { useGlobalContext } from '../utils/GlobalState';
-
+import { useGlobalContext } from "../utils/GlobalState";
 
 const SavedCocktails = () => {
-
   const { loading, data, refetch } = useQuery(QUERY_GET_ME);
   console.log(data);
 
   const [removeCocktail, { error }] = useMutation(REMOVE_COCKTAIL);
 
-  // const userData = data?.me || { savedCocktails: [] };
-
-  // console.log(userData)
-
   const [user, setUser] = useGlobalContext();
 
   // create function that accepts the cocktails's mongo _id value as param and deletes the cocktail from the database
   const handleDeleteCocktail = async (cocktail) => {
-    console.log("REMOVING", cocktail)
+    console.log("REMOVING", cocktail);
     try {
       const { data } = await removeCocktail({
         variables: { cocktailId: cocktail._id },
@@ -34,13 +27,10 @@ const SavedCocktails = () => {
         throw new Error("something went wrong!");
       }
 
-      // upon success, remove cocktail's id from localStorage
-      // removeCocktailId(drinkId);
-
-      setUser(data.removeCocktail)
+      setUser(data.removeCocktail);
 
       // Refetch the me query to update the savedCocktails data
-    refetch();
+      refetch();
     } catch (err) {
       console.error(err);
     }
@@ -52,7 +42,7 @@ const SavedCocktails = () => {
   }
 
   if (!user._id) {
-    return <h1>Getting Profile</h1>
+    return <h1>Getting Profile</h1>;
   }
 
   return (
@@ -74,7 +64,7 @@ const SavedCocktails = () => {
           {user?.savedCocktails.map((cocktail) => {
             return (
               <Col key={cocktail.drinkId} md="3">
-                <Card border="dark"  className="col-md-12 mb-3">
+                <Card border="dark" className="col-md-12 mb-3">
                   {cocktail.image ? (
                     <Card.Img
                       src={cocktail.image}
@@ -83,17 +73,26 @@ const SavedCocktails = () => {
                     />
                   ) : null}
                   <Card.Body>
-                    <Card.Title><strong>{cocktail.name}</strong></Card.Title>
-                    <p className='small'><strong>Category:</strong> {cocktail.category}</p>
-                    <Card.Text><strong>Ingredients:</strong>
-                    <ul>
-                      {cocktail.ingredients?.map((ingredient, index) => (
-                        <li key={index}>
-                          {ingredient.name}: {ingredient.measurement}
-                        </li>
-                      ))}
-                    </ul></Card.Text>
-                    <Card.Text><strong>Instructions: </strong>{cocktail.instructions}</Card.Text>
+                    <Card.Title>
+                      <strong>{cocktail.name}</strong>
+                    </Card.Title>
+                    <p className="small">
+                      <strong>Category:</strong> {cocktail.category}
+                    </p>
+                    <Card.Text>
+                      <strong>Ingredients:</strong>
+                      <ul>
+                        {cocktail.ingredients?.map((ingredient, index) => (
+                          <li key={index}>
+                            {ingredient.name}: {ingredient.measurement}
+                          </li>
+                        ))}
+                      </ul>
+                    </Card.Text>
+                    <Card.Text>
+                      <strong>Instructions: </strong>
+                      {cocktail.instructions}
+                    </Card.Text>
                     <Button
                       className="btn-block btn-danger"
                       onClick={() => handleDeleteCocktail(cocktail)}

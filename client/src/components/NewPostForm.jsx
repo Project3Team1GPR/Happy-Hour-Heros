@@ -6,6 +6,9 @@ import { QUERY_GET_POSTS } from "../utils/queries";
 function NewPostForm() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [formIncomplete, setFormIncomplete] = useState(false);
+
+
   const [createPost, { loading, error }] = useMutation(CREATE_POST, {
     // Update the cache after the mutation is successful
     update(cache, { data: { createPost } }) {
@@ -23,6 +26,12 @@ function NewPostForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Check if the form fields are empty
+    if (!title || !content) {
+      setFormIncomplete(true);
+      return; // Exit early if the form is incomplete
+    }
+
     try {
       // Execute the createPost mutation with the provided variables
       const { data } = await createPost({
@@ -37,45 +46,60 @@ function NewPostForm() {
       // Clear form fields after successful submission
       setTitle("");
       setContent("");
+      setFormIncomplete(false);
     } catch (err) {
       // Handle mutation error
       console.error("Error creating post:", err);
     }
   };
 
+  const handleInputChange = () => {
+    if (formIncomplete) {
+      setFormIncomplete(false);
+    }
+  };
+
   return (
     <div className="container">
-  <div className="row">
-    <div className="col-md-6 mx-auto">
-      <div className="border border-dark rounded p-4 d-flex justify-content-center">
-        <form onSubmit={handleSubmit} className="w-100">
-          <div className="mb-3">
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Title"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-            />
+      <div className="row">
+        <div className="col-md-6 mx-auto">
+          <div className="border border-dark rounded p-4 d-flex justify-content-center">
+            <form onSubmit={handleSubmit} className="w-100">
+              <div className="mb-3">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Title"
+                  value={title}
+                  onChange={(e) => { setTitle(e.target.value);
+                    handleInputChange();
+                  }}
+                />
+              </div>
+              <div className="mb-3">
+                <textarea
+                  className="form-control"
+                  rows="5"
+                  placeholder="Content"
+                  value={content}
+                  onChange={(e) => { setContent(e.target.value);
+                    handleInputChange();
+                  }}
+                />
+              </div>
+              {formIncomplete && (
+                <p className="text-danger">Please complete the form to create a post.</p>
+              )}
+              <button type="submit" className="btn btn-primary">
+                Create Post
+              </button>
+              {loading && <p>Loading...</p>}
+              {error && <p>Error creating post: {error.message}</p>}
+            </form>
           </div>
-          <div className="mb-3">
-            <textarea
-              className="form-control"
-              rows="5"
-              placeholder="Content"
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
-            />
-          </div>
-          <button type="submit" className="btn btn-primary">Create Post</button>
-          {loading && <p>Loading...</p>}
-          {error && <p>Error creating post: {error.message}</p>}
-        </form>
+        </div>
       </div>
     </div>
-  </div>
-</div>
-
   );
 }
 

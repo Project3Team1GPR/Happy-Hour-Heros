@@ -10,8 +10,7 @@ function About() {
     <div className="about-container">
       <div className="vision">
         <div className="container">
-          <div className="about-div">
-          </div>
+          <div className="about-div"></div>
           <div></div>
           <div className="vision-div">
             <h1 className="text-center">About Us</h1>
@@ -51,91 +50,99 @@ function About() {
       </div>
 
       <div className="members">
-        <div className="link-icons">
-          <Card style={{ width: "20rem" }}>
-            <Card.Img
-              variant="top"
-              src="https://t4.ftcdn.net/jpg/00/97/58/97/360_F_97589769_t45CqXyzjz0KXwoBZT9PRaWGHRk5hQqQ.jpg"
-            />
-            <Card.Body>
-              <Card.Title>Jenni Park</Card.Title>
-              <Card.Text>Hi I'm Jenni.</Card.Text>
-            </Card.Body>
-            <Card.Body>
-              <a
-                href="https://github.com/hjenp22"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <FontAwesomeIcon icon={faGithub} />
-              </a>
-              <a
-                href="https://www.linkedin.com/in/hjennip"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <FontAwesomeIcon icon={faLinkedin} />
-              </a>
-            </Card.Body>
-          </Card>
-        </div>
-
-        <div className="link-icons">
-          <Card style={{ width: "20rem" }}>
-            <Card.Img
-              variant="top"
-              src="https://t4.ftcdn.net/jpg/00/97/58/97/360_F_97589769_t45CqXyzjz0KXwoBZT9PRaWGHRk5hQqQ.jpg"
-            />
-            <Card.Body>
-              <Card.Title>Rachel V</Card.Title>
-              <Card.Text>Hi I'm Rachel.</Card.Text>
-            </Card.Body>
-            <Card.Body>
-              <a
-                href="https://github.com/1122c"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <FontAwesomeIcon icon={faGithub} />
-              </a>
-              <a
-                href="https://www.linkedin.com/in/rjv123"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <FontAwesomeIcon icon={faLinkedin} />
-              </a>
-            </Card.Body>
-          </Card>
-        </div>
-
-        <div className="link-icons">
-          <Card style={{ width: "20rem" }}>
-            <Card.Img
-              variant="top"
-              src="https://t4.ftcdn.net/jpg/00/97/58/97/360_F_97589769_t45CqXyzjz0KXwoBZT9PRaWGHRk5hQqQ.jpg"
-            />
-            <Card.Body>
-              <Card.Title>Gavin Meyer</Card.Title>
-              <Card.Text>Hi I'm Gavin.</Card.Text>
-            </Card.Body>
-            <Card.Body>
-              <a
-                href="https://github.com/gmeyer24"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <FontAwesomeIcon icon={faGithub} />
-              </a>
-              <a
-                href="https://linkedin.com/in/gavinpmeyer"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <FontAwesomeIcon icon={faLinkedin} />
-              </a>
-            </Card.Body>
-          </Card>
+        <div className="container">
+          <div className="row justify-content-center">
+            <div className="col-lg-4 mb-4">
+              <div className="link-icons d-flex justify-content-center">
+                <Card style={{ width: "20rem" }}>
+                  <Card.Img
+                    variant="top"
+                    src="https://t4.ftcdn.net/jpg/00/97/58/97/360_F_97589769_t45CqXyzjz0KXwoBZT9PRaWGHRk5hQqQ.jpg"
+                  />
+                  <Card.Body>
+                    <Card.Title>Jenni Park</Card.Title>
+                    <Card.Text>Hi I'm Jenni.</Card.Text>
+                  </Card.Body>
+                  <Card.Body>
+                    <a
+                      href="https://github.com/hjenp22"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <FontAwesomeIcon icon={faGithub} />
+                    </a>
+                    <a
+                      href="https://www.linkedin.com/in/hjennip"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <FontAwesomeIcon icon={faLinkedin} />
+                    </a>
+                  </Card.Body>
+                </Card>
+              </div>
+            </div>
+            <div className="col-lg-4 mb-4">
+              <div className="link-icons d-flex justify-content-center">
+                <Card style={{ width: "20rem" }}>
+                  <Card.Img
+                    variant="top"
+                    src="https://t4.ftcdn.net/jpg/00/97/58/97/360_F_97589769_t45CqXyzjz0KXwoBZT9PRaWGHRk5hQqQ.jpg"
+                  />
+                  <Card.Body>
+                    <Card.Title>Rachel V</Card.Title>
+                    <Card.Text>Hi I'm Rachel.</Card.Text>
+                  </Card.Body>
+                  <Card.Body>
+                    <a
+                      href="https://github.com/1122c"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <FontAwesomeIcon icon={faGithub} />
+                    </a>
+                    <a
+                      href="https://www.linkedin.com/in/rjv123"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <FontAwesomeIcon icon={faLinkedin} />
+                    </a>
+                  </Card.Body>
+                </Card>
+              </div>
+            </div>
+            <div className="col-lg-4 mb-4">
+              <div className="link-icons d-flex justify-content-center">
+                <Card style={{ width: "20rem" }}>
+                  <Card.Img
+                    variant="top"
+                    src="https://t4.ftcdn.net/jpg/00/97/58/97/360_F_97589769_t45CqXyzjz0KXwoBZT9PRaWGHRk5hQqQ.jpg"
+                  />
+                  <Card.Body>
+                    <Card.Title>Gavin Meyer</Card.Title>
+                    <Card.Text>Hi I'm Gavin.</Card.Text>
+                  </Card.Body>
+                  <Card.Body>
+                    <a
+                      href="https://github.com/gmeyer24"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <FontAwesomeIcon icon={faGithub} />
+                    </a>
+                    <a
+                      href="https://linkedin.com/in/gavinpmeyer"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <FontAwesomeIcon icon={faLinkedin} />
+                    </a>
+                  </Card.Body>
+                </Card>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

@@ -22,3 +22,19 @@ export const QUERY_GET_ME = gql`
   }
 }
 `;
+
+export const QUERY_GET_POSTS = gql`
+  query posts {
+    posts {
+      _id
+      title
+      content
+      author {
+        _id
+        username
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;

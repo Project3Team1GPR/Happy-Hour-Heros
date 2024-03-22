@@ -11,6 +11,7 @@ const typeDefs = `
     cocktailCount: Int
     savedCocktails: [Cocktail]
     isPremiumService: Boolean
+    posts: [Post]
   }
 
   type Ingredient {
@@ -33,10 +34,25 @@ const typeDefs = `
     user: User
   }
 
+  type Post {
+    _id: ID!
+    title: String!
+    content: String!
+    author: User! 
+    createdAt: String!
+    updatedAt: String!
+  }
+
+  input PostInput {
+    title: String!
+    content: String!
+  }
+
   type Query {
     cocktails: [Cocktail]
     users: [User]
    me: User
+   posts: [Post]
   }
 
   input IngredientInput {
@@ -60,6 +76,7 @@ const typeDefs = `
     saveCocktail(cocktailInput: SavedCocktailInput): User
     removeCocktail(cocktailId: ID): User
     premium: User
+    createPost(postInput: PostInput): Post
   }
 `;
 

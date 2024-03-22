@@ -154,7 +154,7 @@ const SearchCocktails = () => {
         <h2 className="pt-5">
           {searchedCocktails.length
             ? `Viewing ${searchedCocktails.length} results:`
-            : "Search for a cocktail to begin"}
+            : "Find a Cocktail!"}
         </h2>
 
         <Row>

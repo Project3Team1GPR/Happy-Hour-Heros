@@ -6,6 +6,7 @@ export const QUERY_GET_ME = gql`
       _id
     username
     cocktailCount
+    isPremiumService
     savedCocktails {
       _id
       name

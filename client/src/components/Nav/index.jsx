@@ -47,9 +47,9 @@ const AppNavbar = () => {
 
   return (
     <>
-      <Navbar bg="dark" variant="dark" expand="lg">
+      <Navbar bg="dark" variant="dark" expand="lg" className="fs-5">
         <Container fluid>
-          <Navbar.Brand as={Link} to="/">
+          <Navbar.Brand className="fs-3" as={Link} to="/">
             HAPPY HOUR UNCODED
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="navbar" />

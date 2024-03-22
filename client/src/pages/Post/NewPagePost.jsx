@@ -1,10 +1,11 @@
-import { useQuery } from "@apollo/client";
-import { Container, Row, Col } from "react-bootstrap";
+import { useQuery, useMutation} from "@apollo/client";
+import { Container, Row, Col, Button } from "react-bootstrap";
 import { QUERY_GET_POSTS } from "../../utils/queries"; 
 import NewPostForm from '../../components/NewPostForm';
 import './NewPagePost.css';
+import { REMOVE_POST } from "../../utils/mutations";
 
-const AllPostsPage = () => {
+const NewPagePost = () => {
   const formatDate = (dateString) => {
     const date = new Date(dateString);
     const formattedDate = `${date.getMonth() + 1}-${date.getDate()}-${date.getFullYear()}`;
@@ -12,12 +13,31 @@ const AllPostsPage = () => {
   };
 
   const { loading, error, data } = useQuery(QUERY_GET_POSTS); 
+  const [removePost] = useMutation(REMOVE_POST);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
 
   // Sort the posts array based on the createdAt timestamp in descending order
   const sortedPosts = data.posts.slice().sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+
+  // Handle removing a post
+  const handleRemovePost = async (postId) => {
+    try {
+      await removePost({
+        variables: { postId },
+        refetchQueries: [{ query: QUERY_GET_POSTS }] // Refetch the posts after removal
+      });
+    } catch (err) {
+      console.error("Error removing post:", err);
+    }
+  };
+
+  const { me: loggedInUser } = data;
+
+  console.log("loggedInUser:", loggedInUser); // Debugging statement
+  console.log("Sorted Posts:", sortedPosts); // Debugging statement
+
 
   return (
     <>
@@ -33,6 +53,9 @@ const AllPostsPage = () => {
           <p>{post.content}</p>
           <p>Author: {post.author.username}</p> 
           <p>Created at: {formatDate(new Date().toISOString())}</p>
+          {loggedInUser && loggedInUser._id === post.author._id && (
+          <Button variant="danger" onClick={() => handleRemovePost(post._id)}>Remove Post</Button>
+          )}
         </div>
       ))}
     </Container>
@@ -40,6 +63,6 @@ const AllPostsPage = () => {
   );
 };
 
-export default AllPostsPage;
+export default NewPagePost;
 
 

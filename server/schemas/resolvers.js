@@ -9,7 +9,7 @@ const resolvers = {
           .populate("savedCocktails")
           .populate({
             path: "posts",
-            populate: { path: "author", select: "username" }
+            populate: { path: "author", select: "username" },
           });
       }
       throw AuthenticationError;
@@ -134,12 +134,12 @@ const resolvers = {
       const { title, content } = postInput;
       console.log("Title:", title);
       console.log("Content:", content);
-      
+
       // Check if user is authenticated
       if (!context.user) {
         throw new AuthenticationError("User not authenticated");
       }
-    
+
       try {
         // Create a new post
         let newPost = new Post({
@@ -147,27 +147,61 @@ const resolvers = {
           content,
           author: context.user._id,
         });
-    
+
         // Save the new post to the database
         newPost = await newPost.save();
-    
+
         // Populate the author field with the username
-        newPost = await Post.findById(newPost._id).populate("author", "username");
-    
+        newPost = await Post.findById(newPost._id).populate(
+          "author",
+          "username"
+        );
+
         // Now, push the new post's ID to the user's posts array
         await User.findByIdAndUpdate(context.user._id, {
           $push: { posts: newPost._id },
         });
-    
+
         console.log("New Post Created:", newPost);
         return newPost;
       } catch (error) {
         console.error("Error creating post:", error);
         throw error; // Re-throw the error to be handled by GraphQL
       }
-    }
-    
-},
+    },
+
+    removePost: async (_, { postId }, context) => {
+      // Check if user is authenticated
+      if (!context.user) {
+        throw new AuthenticationError("User not authenticated");
+      }
+
+      // Find the post by ID
+      const post = await Post.findById(postId);
+
+      // Check if the post exists
+      if (!post) {
+        throw new Error("Post not found");
+      }
+
+      // Check if the user is the author of the post
+      if (post.author.toString() !== context.user._id) {
+        throw new AuthenticationError(
+          "You are not authorized to remove this post"
+        );
+      }
+
+      // Remove the post
+      await Post.findByIdAndRemove(postId);
+
+      // Remove the post ID from the user's posts array
+      await User.findByIdAndUpdate(context.user._id, {
+        $pull: { posts: postId },
+      });
+
+      return post;
+    },
+  },
 };
 
 module.exports = resolvers;

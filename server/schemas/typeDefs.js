@@ -77,6 +77,7 @@ const typeDefs = `
     removeCocktail(cocktailId: ID): User
     premium: User
     createPost(postInput: PostInput): Post
+    removePost(postId: ID!): Post
   }
 `;
 

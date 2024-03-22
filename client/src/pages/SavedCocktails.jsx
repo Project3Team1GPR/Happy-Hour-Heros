@@ -73,8 +73,8 @@ const SavedCocktails = () => {
         <Row>
           {user?.savedCocktails.map((cocktail) => {
             return (
-              <Col key={cocktail.drinkId} md="10">
-                <Card border="dark" className="mb-3">
+              <Col key={cocktail.drinkId} md="3">
+                <Card border="dark"  className="col-md-12 mb-3">
                   {cocktail.image ? (
                     <Card.Img
                       src={cocktail.image}

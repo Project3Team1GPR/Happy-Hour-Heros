@@ -1,5 +1,4 @@
 import { createContext, useContext, useState } from "react";
-import { reducer } from './reducers'
 
 const StoreContext = createContext();
 const { Provider } = StoreContext;

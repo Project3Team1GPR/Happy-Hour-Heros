@@ -1,9 +1,9 @@
-import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import Jumbotron from '../components/Jumbotron';
-import { useMutation } from '@apollo/client';
-import { SET_PREMIUM } from '../utils/mutations';
-import { useGlobalContext } from '../utils/GlobalState';
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Jumbotron from "../components/Jumbotron";
+import { useMutation } from "@apollo/client";
+import { SET_PREMIUM } from "../utils/mutations";
+import { useGlobalContext } from "../utils/GlobalState";
 
 function Success() {
   const navigate = useNavigate();
@@ -12,13 +12,12 @@ function Success() {
   const [user, setUser] = useGlobalContext();
 
   useEffect(() => {
-    setPremium()
-    setUser({...user, isPremiumService: true });
-
+    setPremium();
+    setUser({ ...user, isPremiumService: true });
 
     // Redirect to the saved page after a delay
     const timer = setTimeout(() => {
-      navigate('/saved');
+      navigate("/saved");
     }, 3000);
 
     // Set the timer in state
@@ -32,7 +31,10 @@ function Success() {
     <div>
       <Jumbotron>
         <h1>Success!</h1>
-        <h2>Thank you for your purchase! Redirecting to the saved cocktails page...</h2>
+        <h2>
+          Thank you for your purchase! Redirecting to the saved cocktails
+          page...
+        </h2>
       </Jumbotron>
     </div>
   );

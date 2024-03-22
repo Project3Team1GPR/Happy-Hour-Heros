@@ -110,8 +110,6 @@ const SearchCocktails = () => {
         throw new Error("something went wrong!");
       }
       setUser(data.saveCocktail);
-      // if cocktail successfully saves to user's account, save drink id to state
-      // setSavedCocktailIds([...savedCocktailIds, cocktailToSave.drinkId]);
     } catch (err) {
       console.error(err);
     }
@@ -119,30 +117,6 @@ const SearchCocktails = () => {
 
   return (
     <>
-      {/* <div className="text-light bg-dark p-5">
-        <Container>
-          <h1>Search for Cocktails!</h1>
-          <Form onSubmit={handleFormSubmit}>
-            <Row>
-              <Col xs={12} md={8}>
-                <Form.Control
-                  name='searchInput'
-                  value={searchInput}
-                  onChange={(e) => setSearchInput(e.target.value)}
-                  type='text'
-                  size='lg'
-                  placeholder='Search for a cocktail'
-                />
-              </Col>
-              <Col xs={12} md={4}>
-                <Button type='submit' variant='success' size='lg'>
-                  Submit Search
-                </Button>
-              </Col>
-            </Row>
-          </Form>
-        </Container>
-      </div> */}
       {console.log(searchedCocktails.map((cocktail) => cocktail.drinkId))}
 
       <SearchForm handleFormSubmit={handleFormSubmit} />
@@ -161,7 +135,7 @@ const SearchCocktails = () => {
           {searchedCocktails.map((cocktail) => {
             return (
               // Col md is where to adjest width of cards /number of cards in a row
-              <Col md="3" style={{marginTop: "15px"}} key={cocktail.drinkId}>
+              <Col md="3" style={{ marginTop: "15px" }} key={cocktail.drinkId}>
                 <Card
                   border="dark"
                   className="mb-3"

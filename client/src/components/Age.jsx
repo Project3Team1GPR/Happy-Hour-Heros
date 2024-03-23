@@ -2,10 +2,20 @@ import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 
-function Age() {
-  const [show, setShow] = useState(false);
+import Cookies from "js-cookie";
 
-  const handleClose = () => setShow(false);
+function Age() {
+  //   Cookies.set("name", "value", { expires: 7 }); // Expires in 7 days
+  Cookies.remove("age");
+  const name = Cookies.get("name"); // => 'value'
+  const age = Cookies.get("age");
+
+  const [show, setShow] = useState(true); //general modal code starts here
+
+  const handleClose = () => {
+    Cookies.set("age", "value", { expires: 7 });
+    setShow(false);
+  };
   const handleShow = () => setShow(true);
 
   return (
@@ -15,7 +25,7 @@ function Age() {
       </Button> */}
 
       <Modal
-        show={true}
+        show={(age === null || age === undefined) && show}
         onHide={handleClose}
         backdrop="static"
         keyboard={false}
@@ -23,10 +33,7 @@ function Age() {
         <Modal.Header closeButton>
           <Modal.Title>Modal title</Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          I will not close if you click outside me. Do not even try to press
-          escape key.
-        </Modal.Body>
+        <Modal.Body>{age}</Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
             Close

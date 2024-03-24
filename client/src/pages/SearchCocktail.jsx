@@ -138,7 +138,7 @@ const SearchCocktails = () => {
           {searchedCocktails.map((cocktail) => {
             return (
               // Col md is where to adjest width of cards /number of cards in a row
-              <Col md="3" style={{ marginTop: "15px" }} key={cocktail.drinkId}>
+              <Col md="4" style={{ marginTop: "15px" }} key={cocktail.drinkId}>
                 <Card
                   border="dark"
                   className="mb-3"
@@ -169,7 +169,8 @@ const SearchCocktails = () => {
                       </ul>
                     </Card.Text>
                     <Card.Text>
-                      <strong>Instructions:</strong> {cocktail.instructions}
+                      <strong>Instructions:</strong> 
+                      <p>{cocktail.instructions}</p>
                     </Card.Text>
                     {Auth.loggedIn() && (
                       <Button

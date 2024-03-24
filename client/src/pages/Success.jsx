@@ -4,6 +4,8 @@ import Jumbotron from "../components/Jumbotron";
 import { useMutation } from "@apollo/client";
 import { SET_PREMIUM } from "../utils/mutations";
 import { useGlobalContext } from "../utils/GlobalState";
+import AgeVerificationModal from "../components/AgeVerificationModal";
+
 
 function Success() {
   const navigate = useNavigate();
@@ -29,6 +31,8 @@ function Success() {
 
   return (
     <div>
+      <AgeVerificationModal></AgeVerificationModal>
+
       <Jumbotron>
         <h1>Success!</h1>
         <h2>

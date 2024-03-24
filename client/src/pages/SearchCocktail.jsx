@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Container, Col, Form, Button, Card, Row } from "react-bootstrap";
+import AgeVerificationModal from "../components/AgeVerificationModal";
 
 import Auth from "../utils/auth";
 import { searchCocktails } from "../utils/API";
@@ -117,6 +118,8 @@ const SearchCocktails = () => {
 
   return (
     <>
+      <AgeVerificationModal></AgeVerificationModal>
+
       {console.log(searchedCocktails.map((cocktail) => cocktail.drinkId))}
 
       <SearchForm handleFormSubmit={handleFormSubmit} />

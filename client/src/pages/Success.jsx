@@ -4,7 +4,7 @@ import Jumbotron from "../components/Jumbotron";
 import { useMutation } from "@apollo/client";
 import { SET_PREMIUM } from "../utils/mutations";
 import { useGlobalContext } from "../utils/GlobalState";
-import AgeVerificationModal from "../components/AgeVerificationModal";
+// import AgeVerificationModal from "../components/AgeVerificationModal";
 
 
 function Success() {
@@ -31,7 +31,7 @@ function Success() {
 
   return (
     <div>
-      <AgeVerificationModal></AgeVerificationModal>
+      {/* <AgeVerificationModal></AgeVerificationModal> */}
 
       <Jumbotron>
         <h1>Success!</h1>

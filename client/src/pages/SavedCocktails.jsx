@@ -1,6 +1,6 @@
 import { useQuery, useMutation } from "@apollo/client";
 import { Container, Card, Button, Row, Col } from "react-bootstrap";
-import AgeVerificationModal from "../components/AgeVerificationModal";
+// import AgeVerificationModal from "../components/AgeVerificationModal";
 
 
 import Auth from "../utils/auth";
@@ -49,7 +49,7 @@ const SavedCocktails = () => {
 
   return (
     <>
-      <AgeVerificationModal></AgeVerificationModal>
+      {/* <AgeVerificationModal></AgeVerificationModal> */}
 
       <div className="text-light bg-dark p-5">
         <Container>

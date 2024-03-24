@@ -67,8 +67,8 @@ const SavedCocktails = () => {
         <Row>
           {user?.savedCocktails.map((cocktail) => {
             return (
-              <Col key={cocktail.drinkId} md="3">
-                <Card border="dark" className="col-md-12 mb-3">
+              <Col key={cocktail.drinkId} md="4">
+                <Card border="dark" className="col-md-12 mb-3" style={{ width: "100%", height: "100%" }}>
                   {cocktail.image ? (
                     <Card.Img
                       src={cocktail.image}
@@ -95,7 +95,7 @@ const SavedCocktails = () => {
                     </Card.Text>
                     <Card.Text>
                       <strong>Instructions: </strong>
-                      {cocktail.instructions}
+                      <p>{cocktail.instructions}</p>
                     </Card.Text>
                     <Button
                       className="btn-block btn-danger"

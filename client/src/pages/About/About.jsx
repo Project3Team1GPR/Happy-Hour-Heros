@@ -4,10 +4,14 @@ import ListGroup from "react-bootstrap/ListGroup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLinkedin, faGithub } from "@fortawesome/free-brands-svg-icons";
 import "./About.css";
+// import AgeVerificationModal from "../../components/AgeVerificationModal";
+
 
 function About() {
   return (
     <div className="about-container">
+      {/* <AgeVerificationModal></AgeVerificationModal> */}
+
       <div className="vision">
         <div className="container">
           <div className="about-div"></div>

@@ -96,13 +96,13 @@ function About() {
                 <Card style={{ width: "20rem" }}>
                   <Card.Img
                     variant="top"
-                    src="https://t4.ftcdn.net/jpg/00/97/58/97/360_F_97589769_t45CqXyzjz0KXwoBZT9PRaWGHRk5hQqQ.jpg"
+                    src="../src/assets/images/rachel.jpeg"
                     className="mx-auto d-block"
-                    style={{ width: "225px", height: "260px" }}
+                    style={{ width: "235px", height: "260px" }}
                   />
                   <Card.Body>
                     <Card.Title>Rachel V</Card.Title>
-                    <Card.Text>My drink of choice is a Mimosa</Card.Text>
+                    <Card.Text>My drink of choice is a Japanese Whiskey Neat</Card.Text>
                   </Card.Body>
                   <Card.Body>
                     <a

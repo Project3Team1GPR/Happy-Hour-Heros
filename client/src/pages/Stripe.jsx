@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Navigate } from "react-router-dom";
+import { Container, Form, Button, Alert } from "react-bootstrap";
 
 const StripePage = () => {
   const [redirectToSuccess, setRedirectToSuccess] = useState(false);
@@ -30,47 +31,44 @@ const StripePage = () => {
   }
 
   return (
-    <>
-      {redirectToSuccess ? (
-        <Navigate to="/success" />
-      ) : (
-        <div>
-          <h1>Stripe Payment Page</h1>
-          {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
-          <form onSubmit={handlePaymentSubmit}>
-            <label>
-              Card Number:
-              <input
-                type="text"
-                placeholder="Enter card number"
-                value={cardNumber}
-                onChange={(e) => setCardNumber(e.target.value)}
-              />
-            </label>
-            <label>
-              Expiration Date:
-              <input
-                type="text"
-                placeholder="MM/YY"
-                value={expirationDate}
-                onChange={(e) => setExpirationDate(e.target.value)}
-              />
-            </label>
-            <label>
-              CVC:
-              <input
-                type="text"
-                placeholder="CVC"
-                value={cvc}
-                onChange={(e) => setCVC(e.target.value)}
-              />
-            </label>
-            <button type="submit">Pay $2.99/month</button>
-          </form>
-        </div>
-      )}
-    </>
+    <Container className="mt-5">
+      <h1 className="mb-4">Premium Account</h1>
+      {errorMessage && <Alert variant="danger">{errorMessage}</Alert>}
+      <Form onSubmit={handlePaymentSubmit}>
+        <Form.Group controlId="cardNumber">
+          <Form.Label>Card Number:</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="Enter card number"
+            value={cardNumber}
+            onChange={(e) => setCardNumber(e.target.value)}
+          />
+        </Form.Group>
+        <Form.Group controlId="expirationDate">
+          <Form.Label>Expiration Date:</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="MM/YY"
+            value={expirationDate}
+            onChange={(e) => setExpirationDate(e.target.value)}
+          />
+        </Form.Group>
+        <Form.Group controlId="cvc">
+          <Form.Label>CVC:</Form.Label>
+          <Form.Control
+            type="text"
+            placeholder="CVC"
+            value={cvc}
+            onChange={(e) => setCVC(e.target.value)}
+          />
+        </Form.Group>
+        <Button variant="primary" type="submit">
+          Pay $2.99/month
+        </Button>
+      </Form>
+    </Container>
   );
 };
 
 export default StripePage;
+

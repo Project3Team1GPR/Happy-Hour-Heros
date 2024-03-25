@@ -159,7 +159,7 @@ const SearchCocktails = () => {
                       <strong>Category:</strong> {cocktail.category}
                     </div>
                     <div>
-                      <strong>Ingredients:</strong>{" "}
+                      <strong>Ingredients:</strong>
                       <ul>
                         {cocktail.ingredients.map((ingredient, index) => (
                           <li key={index}>

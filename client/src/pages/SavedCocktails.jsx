@@ -66,7 +66,7 @@ const SavedCocktails = () => {
         <Row>
           {user?.savedCocktails.map((cocktail) => {
             return (
-              <Col key={cocktail.drinkId} md="4">
+              <Col key={cocktail.drinkId} md="4" style={{ marginTop: "15px" }}>
                 <Card
                   border="dark"
                   className="col-md-12 mb-3"

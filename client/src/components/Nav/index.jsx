@@ -96,7 +96,7 @@ const AppNavbar = () => {
                 <Nav.Item>
                   {/* modal button colors HERE will have to figure out active an inactive*/}
                   <Nav.Link
-                    style={{ backgroundColor: "black" }}
+                    // style={{ backgroundColor: "black" }}
                     eventKey="login"
                   >
                     Login

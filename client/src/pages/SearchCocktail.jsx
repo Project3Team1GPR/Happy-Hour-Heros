@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Container, Col, Form, Button, Card, Row } from "react-bootstrap";
+// import AgeVerificationModal from "../components/AgeVerificationModal";
 
 import Auth from "../utils/auth";
 import { searchCocktails } from "../utils/API";
@@ -117,6 +118,8 @@ const SearchCocktails = () => {
 
   return (
     <>
+      {/* <AgeVerificationModal></AgeVerificationModal> */}
+
       {console.log(searchedCocktails.map((cocktail) => cocktail.drinkId))}
 
       <SearchForm handleFormSubmit={handleFormSubmit} />
@@ -135,7 +138,7 @@ const SearchCocktails = () => {
           {searchedCocktails.map((cocktail) => {
             return (
               // Col md is where to adjest width of cards /number of cards in a row
-              <Col md="3" style={{ marginTop: "15px" }} key={cocktail.drinkId}>
+              <Col md="4" style={{ marginTop: "15px" }} key={cocktail.drinkId}>
                 <Card
                   border="dark"
                   className="mb-3"
@@ -152,11 +155,11 @@ const SearchCocktails = () => {
                     <Card.Title>
                       <strong>{cocktail.name}</strong>
                     </Card.Title>
-                    <p className="small">
+                    <div className="mb-3">
                       <strong>Category:</strong> {cocktail.category}
-                    </p>
-                    <Card.Text>
-                      <strong>Ingredients:</strong>{" "}
+                    </div>
+                    <div>
+                      <strong>Ingredients:</strong>
                       <ul>
                         {cocktail.ingredients.map((ingredient, index) => (
                           <li key={index}>
@@ -164,9 +167,10 @@ const SearchCocktails = () => {
                           </li>
                         ))}
                       </ul>
-                    </Card.Text>
+                    </div>
                     <Card.Text>
-                      <strong>Instructions:</strong> {cocktail.instructions}
+                      <strong>Instructions: </strong>
+                      {cocktail.instructions}
                     </Card.Text>
                     {Auth.loggedIn() && (
                       <Button

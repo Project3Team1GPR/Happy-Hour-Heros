@@ -4,10 +4,13 @@ import ListGroup from "react-bootstrap/ListGroup";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLinkedin, faGithub } from "@fortawesome/free-brands-svg-icons";
 import "./About.css";
+// import AgeVerificationModal from "../../components/AgeVerificationModal";
 
 function About() {
   return (
     <div className="about-container">
+      {/* <AgeVerificationModal></AgeVerificationModal> */}
+
       <div className="vision">
         <div className="container">
           <div className="about-div"></div>
@@ -17,7 +20,7 @@ function About() {
             <h6 className="text-center">
               <p>
                 Welcome to Happy Hour Uncoded, where passion for coding meets
-                the joy of socializing over drinks. We are a team of three
+                the joy of socializing over drinks. We are Happy Hour Heros, a team of three
                 junior software developers who share a common love for bringing
                 people together and crafting delicious cocktails.
               </p>
@@ -57,11 +60,13 @@ function About() {
                 <Card style={{ width: "20rem" }}>
                   <Card.Img
                     variant="top"
-                    src="https://t4.ftcdn.net/jpg/00/97/58/97/360_F_97589769_t45CqXyzjz0KXwoBZT9PRaWGHRk5hQqQ.jpg"
+                    src="../src/assets/images/jenni.jpeg"
+                    className="mx-auto d-block" 
+                    style={{ width: "225px", height: "260px" }}
                   />
                   <Card.Body>
                     <Card.Title>Jenni Park</Card.Title>
-                    <Card.Text>Hi I'm Jenni.</Card.Text>
+                    <Card.Text>My drink of choice is a Dirty Martini</Card.Text>
                   </Card.Body>
                   <Card.Body>
                     <a
@@ -88,10 +93,12 @@ function About() {
                   <Card.Img
                     variant="top"
                     src="https://t4.ftcdn.net/jpg/00/97/58/97/360_F_97589769_t45CqXyzjz0KXwoBZT9PRaWGHRk5hQqQ.jpg"
+                    className="mx-auto d-block" 
+                    style={{ width: "225px", height: "260px" }}
                   />
                   <Card.Body>
                     <Card.Title>Rachel V</Card.Title>
-                    <Card.Text>Hi I'm Rachel.</Card.Text>
+                    <Card.Text>My drink of choice is a Mimosa</Card.Text>
                   </Card.Body>
                   <Card.Body>
                     <a
@@ -117,11 +124,14 @@ function About() {
                 <Card style={{ width: "20rem" }}>
                   <Card.Img
                     variant="top"
-                    src="https://t4.ftcdn.net/jpg/00/97/58/97/360_F_97589769_t45CqXyzjz0KXwoBZT9PRaWGHRk5hQqQ.jpg"
+                    src="../src/assets/images/gavin.jpeg"
+                    className="mx-auto d-block" 
+                    style={{ width: "225px", height: "260px" }}
                   />
                   <Card.Body>
                     <Card.Title>Gavin Meyer</Card.Title>
-                    <Card.Text>Hi I'm Gavin.</Card.Text>
+                    <Card.Text>My drink of choice is a Old Fashioned
+                    </Card.Text>
                   </Card.Body>
                   <Card.Body>
                     <a

@@ -1,5 +1,6 @@
 import { useQuery, useMutation } from "@apollo/client";
 import { Container, Card, Button, Row, Col } from "react-bootstrap";
+// import AgeVerificationModal from "../components/AgeVerificationModal";
 
 import Auth from "../utils/auth";
 import { removeCocktailId } from "../utils/localStorage";
@@ -47,6 +48,8 @@ const SavedCocktails = () => {
 
   return (
     <>
+      {/* <AgeVerificationModal></AgeVerificationModal> */}
+
       <div className="text-light bg-dark p-5">
         <Container>
           <h1>Viewing {user.username}'s cocktails!</h1>
@@ -63,8 +66,12 @@ const SavedCocktails = () => {
         <Row>
           {user?.savedCocktails.map((cocktail) => {
             return (
-              <Col key={cocktail.drinkId} md="3">
-                <Card border="dark" className="col-md-12 mb-3">
+              <Col key={cocktail.drinkId} md="4" style={{ marginTop: "15px" }}>
+                <Card
+                  border="dark"
+                  className="col-md-12 mb-3"
+                  style={{ width: "100%", height: "100%" }}
+                >
                   {cocktail.image ? (
                     <Card.Img
                       src={cocktail.image}
@@ -76,10 +83,10 @@ const SavedCocktails = () => {
                     <Card.Title>
                       <strong>{cocktail.name}</strong>
                     </Card.Title>
-                    <p className="small">
+                    <div className="mb-3">
                       <strong>Category:</strong> {cocktail.category}
-                    </p>
-                    <Card.Text>
+                      </div>
+                    <div>
                       <strong>Ingredients:</strong>
                       <ul>
                         {cocktail.ingredients?.map((ingredient, index) => (
@@ -88,7 +95,7 @@ const SavedCocktails = () => {
                           </li>
                         ))}
                       </ul>
-                    </Card.Text>
+                    </div>
                     <Card.Text>
                       <strong>Instructions: </strong>
                       {cocktail.instructions}

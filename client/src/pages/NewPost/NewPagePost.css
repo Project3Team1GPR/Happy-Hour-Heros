@@ -1,0 +1,29 @@
+.post-container {
+  border: 2px solid black;
+  border-top: 1px solid black;
+  padding: 10px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.post-link {
+  color: black; /* Set link color to black */
+  text-decoration: none; /* Remove underline */
+}
+
+.post-content {
+  border-top: 1px solid black; /* Add black lines above each part */
+  width: 100%;
+  margin-top: 10px; /* Add margin between parts */
+  padding-top: 10px; /* Add padding between parts and the line */
+  text-align: center;
+}
+.post-link-container {
+  background-color: grey; /* Set background color for the top section */
+  width: 100%;
+  padding: 10px; /* Add padding to the top section */
+  display: flex;
+  justify-content: center; /* Center the title */
+}

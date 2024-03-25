@@ -4,6 +4,8 @@ import { QUERY_GET_ME } from "../utils/queries";
 import { useQuery } from "@apollo/client";
 import { saveCocktailIds, getSavedCocktailIds } from "../utils/localStorage";
 
+import AgeVerificationModal from "../components/AgeVerificationModal";
+
 import React from "react";
 import Carousel from "react-bootstrap/Carousel";
 
@@ -18,6 +20,7 @@ const Home = () => {
 
   return (
     <div className="container">
+      <AgeVerificationModal></AgeVerificationModal>
       <Carousel interval={1500}>
         {/* First Carousel Item */}
         <Carousel.Item>

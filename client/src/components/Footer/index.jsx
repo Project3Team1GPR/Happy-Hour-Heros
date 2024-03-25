@@ -5,6 +5,7 @@ export default function Footer() {
   <footer className="bg-dark text-light p-3 text-center">
       <div className="fs-6">
        &copy; 2024 Happy Hour Uncoded
+       <p>Drink Responsibly</p>
       </div>
   </footer>
   );

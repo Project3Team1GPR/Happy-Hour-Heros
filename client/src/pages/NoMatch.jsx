@@ -1,28 +1,40 @@
-import React, { useEffect } from 'react';
-import { Link } from 'react-router-dom';
-import Confetti from 'react-confetti'; 
-import Jumbotron from '../components/Jumbotron';
+import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
+import Confetti from "react-confetti";
+import Jumbotron from "../components/Jumbotron";
 
 const NoMatch = () => {
   useEffect(() => {
-
     setIsConfettiActive(true);
 
     const confettiTimeout = setTimeout(() => {
       setIsConfettiActive(false);
     }, 5000);
     return () => clearTimeout(confettiTimeout);
-  }, []); 
+  }, []);
   const [isConfettiActive, setIsConfettiActive] = React.useState(false);
 
   return (
-    <div>
+    <div
+      style={{
+        backgroundColor: "hotpink",
+        minHeight: "200vh",
+        padding: "20px",
+        boxSizing: "border-box",
+      }}
+    >
       {isConfettiActive && <Confetti />}
 
-      <Jumbotron fluid style={{ backgroundColor: 'hotpink' }}>
-        <h1 className="display-4">CHEERS!</h1>
-        <h2 className="lead">You Must Be Tipsy</h2>
-        <Link to="/">HAPPY HOUR UNCODED</Link>
+      <Jumbotron fluid style={{ backgroundColor: "hotpink" }}>
+        <h1 className="display-4" style={{ color: "white" }}>
+          CHEERS!
+        </h1>
+        <h2 className="lead" style={{ color: "white" }}>
+          You Must Be Tipsy
+        </h2>
+        <Link to="/" style={{ color: "yellow", textDecoration: "none" }}>
+          HAPPY HOUR UNCODED
+        </Link>
 
         <h1>
           <span role="img" aria-label="Face With Rolling Eyes Emoji">

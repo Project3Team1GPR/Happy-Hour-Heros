@@ -38,7 +38,7 @@ const NoMatch = () => {
           title="Giphy Embed"
         ></iframe>
         <p>
-          <a href="https://giphy.com/gifs/chandon-d3dIaJLb3TXRwxyg">via GIPHY</a>
+          <a href="https://giphy.com/gifs/chandon-d3dIaJLb3TXRwxyg"></a>
         </p>
       </Jumbotron>
     </div>

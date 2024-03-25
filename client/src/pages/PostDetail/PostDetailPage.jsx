@@ -59,7 +59,9 @@ function PostDetailPage() {
   return (
     <Container>
       <Container className="postDetail-container border border-dark rounded p-3 mb-3">
-        <h1>{post.title}</h1>
+        <div className="post-title-container">
+          <h1>{post.title}</h1>
+        </div>
         <p className="post-content">{post.content}</p>
         <p>Post by: {post.author.username}</p>
         <p>Posted: {formatDate(new Date().toISOString())}</p>

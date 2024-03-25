@@ -1,13 +1,27 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import Confetti from 'react-confetti'; 
 import Jumbotron from '../components/Jumbotron';
 
 const NoMatch = () => {
+  useEffect(() => {
+
+    setIsConfettiActive(true);
+
+    const confettiTimeout = setTimeout(() => {
+      setIsConfettiActive(false);
+    }, 5000);
+    return () => clearTimeout(confettiTimeout);
+  }, []); 
+  const [isConfettiActive, setIsConfettiActive] = React.useState(false);
+
   return (
     <div>
-      <Jumbotron style={{ backgroundColor: 'hotpink' }}>
-        <h1>CHEERS!</h1>
-        <h2>You Must Be Tipsy</h2>
+      {isConfettiActive && <Confetti />}
+
+      <Jumbotron fluid style={{ backgroundColor: 'hotpink' }}>
+        <h1 className="display-4">CHEERS!</h1>
+        <h2 className="lead">You Must Be Tipsy</h2>
         <Link to="/">HAPPY HOUR UNCODED</Link>
 
         <h1>
@@ -32,4 +46,3 @@ const NoMatch = () => {
 };
 
 export default NoMatch;
-

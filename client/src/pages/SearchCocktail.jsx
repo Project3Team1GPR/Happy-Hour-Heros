@@ -155,11 +155,11 @@ const SearchCocktails = () => {
                     <Card.Title>
                       <strong>{cocktail.name}</strong>
                     </Card.Title>
-                    <p className="small">
+                    <div className="mb-3">
                       <strong>Category:</strong> {cocktail.category}
-                    </p>
-                    <Card.Text>
-                      <strong>Ingredients:</strong>{" "}
+                    </div>
+                    <div>
+                      <strong>Ingredients:</strong>
                       <ul>
                         {cocktail.ingredients.map((ingredient, index) => (
                           <li key={index}>
@@ -167,10 +167,10 @@ const SearchCocktails = () => {
                           </li>
                         ))}
                       </ul>
-                    </Card.Text>
+                    </div>
                     <Card.Text>
-                      <strong>Instructions:</strong> 
-                      <p>{cocktail.instructions}</p>
+                      <strong>Instructions: </strong>
+                      {cocktail.instructions}
                     </Card.Text>
                     {Auth.loggedIn() && (
                       <Button

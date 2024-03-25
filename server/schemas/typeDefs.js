@@ -41,6 +41,15 @@ const typeDefs = `
     author: User! 
     createdAt: String!
     updatedAt: String!
+    comments: [Comment]
+  }
+
+  type Comment {
+    _id: ID!
+    content: String!
+    author: User!          
+    createdAt: String!
+    post: Post!
   }
 
   input PostInput {
@@ -48,11 +57,18 @@ const typeDefs = `
     content: String!
   }
 
+  input CommentInput {
+    content: String!
+    postId: ID!           
+  }
+
   type Query {
-    cocktails: [Cocktail]
-    users: [User]
+   cocktails: [Cocktail]
+   users: [User]
    me: User
    posts: [Post]
+   postById(postId: ID!): Post
+   commentsByPost(postId: ID!): [Comment]
   }
 
   input IngredientInput {
@@ -78,6 +94,8 @@ const typeDefs = `
     premium: User
     createPost(postInput: PostInput): Post
     removePost(postId: ID!): Post
+    createComment(commentInput: CommentInput!): Comment
+    deleteComment(commentId: ID!): Comment
   }
 `;
 

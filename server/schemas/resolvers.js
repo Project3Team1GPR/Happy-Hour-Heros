@@ -1,4 +1,4 @@
-const { User, Cocktail, Post } = require("../models");
+const { User, Cocktail, Post, Comment } = require("../models");
 const { signToken, AuthenticationError } = require("../utils/auth");
 
 const resolvers = {
@@ -21,7 +21,31 @@ const resolvers = {
       return await User.find({}).populate;
     },
     posts: async () => {
-      return await Post.find({}).sort({ createdAt: -1 }).populate("author");
+      return await Post.find({}).sort({ createdAt: -1 }).populate("author")
+      // .populate({
+      //   path: 'comments',
+      //   populate: { path: 'author', select: 'username' }
+      // });
+    },
+    commentsByPost: async (parent, { postId }) => {
+      return await Comment.find({ post: postId }).populate("author");
+    },
+    postById: async (_, { postId }) => {
+      try {
+        const post = await Post.findById(postId).populate('author').populate({
+          path: 'comments',
+          populate: { path: 'author', select: 'username' }
+        });
+
+        if (!post) {
+          throw new Error('Post not found');
+        }
+
+        return post;
+      } catch (error) {
+        console.error('Error fetching post by ID:', error);
+        throw error;
+      }
     },
   },
 
@@ -175,31 +199,106 @@ const resolvers = {
       if (!context.user) {
         throw new AuthenticationError("User not authenticated");
       }
-
-      // Find the post by ID
-      const post = await Post.findById(postId);
-
-      // Check if the post exists
-      if (!post) {
-        throw new Error("Post not found");
+    
+      try {
+        // Find the post by ID
+        const post = await Post.findById(postId);
+    
+        // Check if the post exists
+        if (!post) {
+          throw new Error("Post not found");
+        }
+    
+        // Check if the user is the author of the post
+        if (post.author.toString() !== context.user._id) {
+          throw new AuthenticationError("You are not authorized to remove this post");
+        }
+    
+        // Remove comments associated with the post
+        await Comment.deleteMany({ post: postId });
+    
+        // Remove the post
+        await Post.findByIdAndRemove(postId);
+    
+        // Remove the post ID from the user's posts array
+        await User.findByIdAndUpdate(context.user._id, {
+          $pull: { posts: postId },
+        });
+    
+        return post;
+      } catch (error) {
+        console.error("Error removing post:", error);
+        throw error;
       }
-
-      // Check if the user is the author of the post
-      if (post.author.toString() !== context.user._id) {
-        throw new AuthenticationError(
-          "You are not authorized to remove this post"
-        );
+    },
+    
+    createComment: async (parent, { commentInput }, context) => {
+      // Check if user is authenticated
+      if (!context.user) {
+        throw new AuthenticationError("User not authenticated");
       }
-
-      // Remove the post
-      await Post.findByIdAndRemove(postId);
-
-      // Remove the post ID from the user's posts array
-      await User.findByIdAndUpdate(context.user._id, {
-        $pull: { posts: postId },
-      });
-
-      return post;
+    
+      try {
+        const { content, postId } = commentInput;
+    
+        // Create a new comment
+        let newComment = new Comment({
+          content,
+          author: context.user._id,
+          post: postId,
+        });
+    
+        // Save the new comment to the database
+        newComment = await newComment.save();
+    
+        // Populate the author field with the username
+        newComment = await Comment.findById(newComment._id).populate("author", "username");
+    
+        // Now, push the new comment's ID to the corresponding post's comments array
+        await Post.findByIdAndUpdate(postId, {
+          $push: { comments: newComment._id },
+        });
+    
+        console.log("New Comment Created:", newComment);
+        return newComment;
+      } catch (error) {
+        console.error("Error creating comment:", error);
+        throw error; // Re-throw the error to be handled by GraphQL
+      }
+    },
+    deleteComment: async (_, { commentId }, context) => {
+      // Check if user is authenticated
+      if (!context.user) {
+        throw new AuthenticationError("User not authenticated");
+      }
+      
+      try {
+        // Find the comment by ID
+        const comment = await Comment.findById(commentId);
+        
+        // Check if the comment exists
+        if (!comment) {
+          throw new Error("Comment not found");
+        }
+        
+        // Check if the user is the author of the comment
+        if (comment.author.toString() !== context.user._id) {
+          throw new AuthenticationError("You are not authorized to delete this comment");
+        }
+        
+        // Remove the comment
+        await Comment.findByIdAndRemove(commentId);
+        
+        // Remove the comment ID from the corresponding post's comments array
+        await Post.findByIdAndUpdate(comment.post, {
+          $pull: { comments: commentId },
+        });
+        
+        return comment;
+      } catch (error) {
+        console.error("Error deleting comment:", error);
+        throw error; // Re-throw the error to be handled by GraphQL
+      }
     },
   },
 };

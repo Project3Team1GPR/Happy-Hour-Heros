@@ -156,3 +156,31 @@ export const REMOVE_POST = gql`
     }
   }
 `;
+
+export const CREATE_COMMENT = gql`
+  mutation createComment($commentInput: CommentInput!) {
+    createComment(commentInput: $commentInput) {
+      _id
+      content
+      createdAt
+      author {
+        _id
+        username
+      }
+    }
+  }
+`;
+
+export const DELETE_COMMENT = gql`
+  mutation deleteComment($commentId: ID!) {
+    deleteComment(commentId: $commentId) {
+      _id
+      content
+      createdAt
+      author {
+        _id
+        username
+      }
+    }
+  }
+`;

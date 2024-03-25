@@ -11,7 +11,8 @@ import SearchCocktail from "./pages/SearchCocktail.jsx";
 import SavedCocktails from "./pages/SavedCocktails.jsx";
 import StripePage from "./pages/Stripe.jsx";
 import About from "./pages/About/About.jsx";
-import NewPostPage from "../src/pages/Post/NewPagePost.jsx";
+import NewPostPage from "../src/pages/NewPost/NewPagePost.jsx";
+import PostDetailPage from "./pages/PostDetail/PostDetailPage.jsx";
 
 const router = createBrowserRouter([
   {
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
       {
         path: "/post",
         element: <NewPostPage />,
+      },
+      {
+        path: "/post/:postId", 
+        element: <PostDetailPage />,
       },
       {
         path: "/*",

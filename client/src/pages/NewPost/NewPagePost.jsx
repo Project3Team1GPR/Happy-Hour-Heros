@@ -1,5 +1,6 @@
 import { useQuery, useMutation} from "@apollo/client";
 import { Container, Row, Col, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import { QUERY_GET_POSTS } from "../../utils/queries"; 
 import NewPostForm from '../../components/NewPostForm';
 import './NewPagePost.css';
@@ -49,10 +50,10 @@ const NewPagePost = () => {
     <Container>
       {sortedPosts.map((post) => (
         <div key={post._id} className="post-container border border-dark rounded p-3 mb-3">
-          <h2>{post.title}</h2>
-          <p>{post.content}</p>
-          <p>Author: {post.author.username}</p> 
-          <p>Created at: {formatDate(new Date().toISOString())}</p>
+          <h2><Link to={`/post/${post._id}`} className="post-link">{post.title}</Link></h2>
+          <p className="post-content">{post.content}</p>
+          <p>Posted by: {post.author.username}</p> 
+          <p>Posted: {formatDate(new Date().toISOString())}</p>
           {loggedInUser && loggedInUser._id === post.author._id && (
           <Button variant="danger" onClick={() => handleRemovePost(post._id)}>Remove Post</Button>
           )}

@@ -42,3 +42,28 @@ export const QUERY_GET_POSTS = gql`
     }
   }
 `;
+
+export const GET_POST_DETAILS = gql`
+  query getPostDetails($postId: ID!) {
+    postById(postId: $postId) {
+      _id
+      title
+      content
+      author {
+        _id
+        username
+      }
+      createdAt
+      updatedAt
+      comments {
+        _id
+        content
+        author {
+          _id
+          username
+        }
+        createdAt
+      }
+    }
+  }
+`;

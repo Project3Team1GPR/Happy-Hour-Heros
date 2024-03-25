@@ -2,7 +2,6 @@ import { useQuery, useMutation } from "@apollo/client";
 import { Container, Card, Button, Row, Col } from "react-bootstrap";
 // import AgeVerificationModal from "../components/AgeVerificationModal";
 
-
 import Auth from "../utils/auth";
 import { removeCocktailId } from "../utils/localStorage";
 import { QUERY_GET_ME } from "../utils/queries";
@@ -68,7 +67,11 @@ const SavedCocktails = () => {
           {user?.savedCocktails.map((cocktail) => {
             return (
               <Col key={cocktail.drinkId} md="4">
-                <Card border="dark" className="col-md-12 mb-3" style={{ width: "100%", height: "100%" }}>
+                <Card
+                  border="dark"
+                  className="col-md-12 mb-3"
+                  style={{ width: "100%", height: "100%" }}
+                >
                   {cocktail.image ? (
                     <Card.Img
                       src={cocktail.image}
@@ -80,10 +83,10 @@ const SavedCocktails = () => {
                     <Card.Title>
                       <strong>{cocktail.name}</strong>
                     </Card.Title>
-                    <p className="small">
+                    <div className="mb-3">
                       <strong>Category:</strong> {cocktail.category}
-                    </p>
-                    <Card.Text>
+                      </div>
+                    <div>
                       <strong>Ingredients:</strong>
                       <ul>
                         {cocktail.ingredients?.map((ingredient, index) => (
@@ -92,10 +95,10 @@ const SavedCocktails = () => {
                           </li>
                         ))}
                       </ul>
-                    </Card.Text>
+                    </div>
                     <Card.Text>
                       <strong>Instructions: </strong>
-                      <p>{cocktail.instructions}</p>
+                      {cocktail.instructions}
                     </Card.Text>
                     <Button
                       className="btn-block btn-danger"

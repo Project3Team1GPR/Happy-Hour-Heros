@@ -60,11 +60,12 @@ function NewPostForm() {
   };
 
   return (
-    <div className="container">
+    <div className="container" s>
       <div className="row">
-        <div className="col-md-6 mx-auto">
+        <div className=" mx-auto">
           <div className="border border-dark rounded p-4 d-flex justify-content-center">
             <form onSubmit={handleSubmit} className="w-100">
+            <h4 className="merriweather-regular-italic">Add New Topic </h4>
               <div className="mb-3">
                 <input
                   type="text"

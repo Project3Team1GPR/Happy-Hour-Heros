@@ -67,15 +67,10 @@ function PostDetailPage() {
         <p>Posted: {formatDate(new Date().toISOString())}</p>
       </Container>
 
-      <div style={{ marginBottom: "50px" }} />
-
-      <CreateCommentForm postId={postId} />
-
-      <div style={{ marginBottom: "50px" }} />
-
-      <Container>
+          <h2 className="text-center">Comments</h2>
+    <div className="d-flex">
+      <Container className="col-md-8">
         <div className="text-center">
-          <h2>Comments</h2>
         </div>
         {post.comments.map((comment) => (
           <div
@@ -90,12 +85,21 @@ function PostDetailPage() {
                 variant="danger"
                 onClick={() => handleDeleteComment(comment._id)}
               >
-                Delete Comment
+               x
               </Button>
             )}
           </div>
         ))}
       </Container>
+      <div className="col-md-4">
+          <CreateCommentForm postId={postId} />
+      </div>
+    </div>
+
+
+      
+
+      
 
       {/* Back button */}
       <Button as={Link} to="/post" variant="secondary" className="mt-3">

@@ -18,6 +18,15 @@ body {
   min-height: 100%;
 }
 
+/* FONTS */
+.merriweather-regular-italic {
+  font-family: "Merriweather", serif;
+  font-weight: 400;
+  font-style: italic;
+}
+
+
+
 body {
   margin: 0;
   padding: 0;
@@ -86,6 +95,8 @@ header {
 header a {
   color: var(--light);
 }
+
+
 
 button {
   font-size: 1rem;
@@ -197,6 +208,11 @@ input:focus {
 .card {
   width: 25%;
   text-align: center;
+}
+
+.cardImg {
+  height: 150px;
+  width: 150px !important;
 }
 
 .error-text {

@@ -44,40 +44,42 @@ const NewPagePost = () => {
   console.log("Sorted Posts:", sortedPosts); // Debugging statement
 
   return (
-    <>
-      <div className="mb-4 text-center">
-        <h1 className="text-center mt-4">Create New Post</h1>
-        <p>Current Date: {formatDate(new Date().toISOString())}</p>
-        <NewPostForm />
-      </div>
-      <Container>
-        {sortedPosts.map((post) => (
-          <div
-            key={post._id}
-            className="post-container border border-dark rounded p-3 mb-3"
-          >
-            <div className="post-link-container">
-              <h2>
-                <Link to={`/post/${post._id}`} className="post-link">
-                  {post.title}
-                </Link>
-              </h2>
+    <div className="text-center">
+      <h1 className="text-center mt-4">Create New Post</h1>
+      <p>Current Date: {formatDate(new Date().toISOString())}</p>
+      <div className="d-flex">
+        <div className="mb-4 text-center col-md-4">
+          <NewPostForm />
+        </div>
+        <Container className="col-md-8">
+          {sortedPosts.map((post) => (
+            <div
+              key={post._id}
+              className="post-container border border-dark rounded p-3 mb-3"
+            >
+              <div className="post-link-container">
+                <h2>
+                  <Link to={`/post/${post._id}`} className="post-link">
+                    {post.title}
+                  </Link>
+                </h2>
+              </div>
+              <p className="post-content">{post.content}</p>
+              <p>Posted by: {post.author.username}</p>
+              <p>Posted: {formatDate(new Date().toISOString())}</p>
+              {loggedInUser && loggedInUser._id === post.author._id && (
+                <Button
+                  variant="danger"
+                  onClick={() => handleRemovePost(post._id)}
+                >
+                  Remove Post
+                </Button>
+              )}
             </div>
-            <p className="post-content">{post.content}</p>
-            <p>Posted by: {post.author.username}</p>
-            <p>Posted: {formatDate(new Date().toISOString())}</p>
-            {loggedInUser && loggedInUser._id === post.author._id && (
-              <Button
-                variant="danger"
-                onClick={() => handleRemovePost(post._id)}
-              >
-                Remove Post
-              </Button>
-            )}
-          </div>
-        ))}
-      </Container>
-    </>
+          ))}
+        </Container>
+      </div>
+    </div>
   );
 };
 

@@ -59,7 +59,7 @@ const AppNavbar = () => {
                 About
               </Nav.Link>
               <Nav.Link as={Link} to="/search" onClick={handleLinkClick}>
-                Search For Cocktails
+                Cocktails
               </Nav.Link>
               {/* if user is logged in show saved cocktails and logout */}
               {Auth.loggedIn() ? (
@@ -68,7 +68,7 @@ const AppNavbar = () => {
                     Post
                   </Nav.Link>
                   <Nav.Link as={Link} to="/saved" onClick={handleLinkClick}>
-                    See Your Cocktails
+                    Your Cocktails
                   </Nav.Link>
                   <Nav.Link onClick={Auth.logout}>Logout</Nav.Link>
                 </>

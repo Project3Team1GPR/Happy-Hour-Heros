@@ -6,7 +6,7 @@ const SearchForm = ({ handleFormSubmit }) => {
 
   return (
     <>
-      <div className="text-dark bg-light p-5 mt-3">
+      <div className="text-light bg-dark p-5 mt-3">
         <Container>
           <h1>Search for a cocktail below</h1>
           <Form onSubmit={(e) => handleFormSubmit(e, searchInput)}>

@@ -50,6 +50,13 @@ const AppNavbar = () => {
       <Navbar bg="dark" variant="dark" expand="lg" className="fs-5">
         <Container fluid>
           <Navbar.Brand className="fs-3" as={Link} to="/">
+            <img
+              src="/images/hhu.jpg"
+              width="30"
+              height="30"
+              className="d-inline-block align-middle me-2"
+              alt="HHU Logo"
+            />
             HAPPY HOUR UNCODED
           </Navbar.Brand>
           <Navbar.Toggle aria-controls="navbar" />

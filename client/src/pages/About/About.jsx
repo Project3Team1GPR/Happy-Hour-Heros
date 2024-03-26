@@ -124,7 +124,7 @@ function About() {
                 <Card style={{ width: "20rem" }}>
                   <Card.Img
                     variant="top"
-                    src="images/gavin.jpeg"
+                    src="/images/gavin.jpeg"
                     className="mx-auto d-block" 
                     style={{ width: "235px", height: "260px" }}
                   />

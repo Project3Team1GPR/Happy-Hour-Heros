@@ -60,7 +60,7 @@ function About() {
                 <Card style={{ width: "20rem" }}>
                   <Card.Img
                     variant="top"
-                    src="../src/assets/images/jenni.jpeg"
+                    src="/images/jenni.jpeg"
                     className="mx-auto d-block" 
                     style={{ width: "237px", height: "260px" }}
                   />
@@ -92,7 +92,7 @@ function About() {
                 <Card style={{ width: "20rem" }}>
                   <Card.Img
                     variant="top"
-                    src="../src/assets/images/rachel.jpeg"
+                    src="/images/rachel.jpeg"
                     className="mx-auto d-block" 
                     style={{ width: "240px", height: "260px" }}
                   />
@@ -124,7 +124,7 @@ function About() {
                 <Card style={{ width: "20rem" }}>
                   <Card.Img
                     variant="top"
-                    src="../src/assets/images/gavin.jpeg"
+                    src="images/gavin.jpeg"
                     className="mx-auto d-block" 
                     style={{ width: "235px", height: "260px" }}
                   />

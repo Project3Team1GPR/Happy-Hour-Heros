@@ -5,6 +5,8 @@ import { QUERY_GET_POSTS } from "../../utils/queries";
 import NewPostForm from "../../components/NewPostForm";
 import "./NewPagePost.css";
 import { REMOVE_POST } from "../../utils/mutations";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 const NewPagePost = () => {
   const formatDate = (dateString) => {
@@ -71,7 +73,7 @@ const NewPagePost = () => {
                 variant="danger"
                 onClick={() => handleRemovePost(post._id)}
               >
-                Remove Post
+                <FontAwesomeIcon icon={faTrash} />
               </Button>
             )}
           </div>

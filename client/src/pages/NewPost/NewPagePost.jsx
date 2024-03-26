@@ -65,9 +65,9 @@ const NewPagePost = () => {
                 </Link>
               </h2>
             </div>
-            <p className="post-content">{post.content}</p>
-            <p>Posted by: {post.author.username}</p>
-            <p>Posted: {formatDate(new Date().toISOString())}</p>
+            <p><strong>Posted By: {post.author.username}</strong></p>
+            <p>{post.content}</p>
+            <p className="post-content">Posted: {formatDate(new Date().toISOString())}</p>
             {loggedInUser && loggedInUser._id === post.author._id && (
               <Button
                 variant="danger"

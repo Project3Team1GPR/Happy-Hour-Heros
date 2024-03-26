@@ -212,7 +212,7 @@ Jenni Park | Email: hjipark22@gmail.com | GitHub: hjenp22
 
 Rachel V | Email: yesrjv@gmail.com | GitHub: 1122c
 
-Project Link: [GitHub Repo](https://github.com/Project3Team1GPR/Happy-Hour-Heros/Project-3-Team-1)
+Project Link: [GitHub Repo](https://github.com/Project3Team1GPR/Happy-Hour-Heros)
 
 Deployed Link: [HAPPY HOUR UNCODED](https://project-3-team-1.onrender.com/)
 

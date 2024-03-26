@@ -1,6 +1,9 @@
 import { useQuery, useMutation } from "@apollo/client";
 import { Container, Card, Button, Row, Col } from "react-bootstrap";
 // import AgeVerificationModal from "../components/AgeVerificationModal";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
 
 import Auth from "../utils/auth";
 import { removeCocktailId } from "../utils/localStorage";
@@ -53,6 +56,7 @@ const SavedCocktails = () => {
       <div className="text-light bg-dark p-5">
         <Container>
           <h1>Viewing {user.username}'s cocktails!</h1>
+          <p>For unlimited saves, upgrade to Premium <Link as={Link} to="/stripe">HERE</Link></p>
         </Container>
       </div>
       <Container>
@@ -85,13 +89,13 @@ const SavedCocktails = () => {
                     </Card.Title>
                     <div className="mb-3">
                       <strong>Category:</strong> {cocktail.category}
-                      </div>
+                    </div>
                     <div>
                       <strong>Ingredients:</strong>
-                      <ul>
+                      <ul style={{ listStyle: 'none', padding: 0 }}>
                         {cocktail.ingredients?.map((ingredient, index) => (
                           <li key={index}>
-                            {ingredient.name}: {ingredient.measurement}
+                            🍹 {ingredient.name}: {ingredient.measurement}
                           </li>
                         ))}
                       </ul>
@@ -104,7 +108,7 @@ const SavedCocktails = () => {
                       className="btn-block btn-danger"
                       onClick={() => handleDeleteCocktail(cocktail)}
                     >
-                      Delete this Cocktail!
+                      <FontAwesomeIcon icon={faTrash} />
                     </Button>
                   </Card.Body>
                 </Card>

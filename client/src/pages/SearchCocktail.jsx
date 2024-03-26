@@ -160,10 +160,10 @@ const SearchCocktails = () => {
                     </div>
                     <div>
                       <strong>Ingredients:</strong>
-                      <ul>
+                      <ul style={{ listStyle: 'none', padding: 0 }}>
                         {cocktail.ingredients.map((ingredient, index) => (
                           <li key={index}>
-                            {ingredient.name}: {ingredient.measurement}
+                            🍹 {ingredient.name}: {ingredient.measurement}
                           </li>
                         ))}
                       </ul>

@@ -6,6 +6,8 @@ import { DELETE_COMMENT } from "../../utils/mutations";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import "./PostDetail.css";
 import CreateCommentForm from "../../components/NewCommentForm";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 function PostDetailPage() {
   const formatDate = (dateString) => {
@@ -62,9 +64,9 @@ function PostDetailPage() {
         <div className="post-title-container">
           <h1>{post.title}</h1>
         </div>
-        <p className="post-content">{post.content}</p>
-        <p>Post by: {post.author.username}</p>
-        <p>Posted: {formatDate(new Date().toISOString())}</p>
+        <p><strong>Post By: {post.author.username}</strong></p>
+        <p>{post.content}</p>
+        <p className="post-content">Posted: {formatDate(new Date().toISOString())}</p>
       </Container>
 
       <div style={{ marginBottom: "50px" }} />
@@ -82,15 +84,15 @@ function PostDetailPage() {
             key={comment._id}
             className="postDetail-container border border-dark rounded p-3 mb-3"
           >
+            <p><strong>Posted By: {comment.author.username}</strong></p>
             <p>{comment.content}</p>
-            <p>Posted by: {comment.author.username}</p>
-            <p>Posted: {formatDate(new Date().toISOString())}</p>
+            <p className="post-content">Posted: {formatDate(new Date().toISOString())}</p>
             {loggedInUser && loggedInUser._id === comment.author._id && (
               <Button
                 variant="danger"
                 onClick={() => handleDeleteComment(comment._id)}
               >
-                Delete Comment
+                <FontAwesomeIcon icon={faTrash} />
               </Button>
             )}
           </div>

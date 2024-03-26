@@ -62,7 +62,7 @@ const StripePage = () => {
             onChange={(e) => setCVC(e.target.value)}
           />
         </Form.Group>
-        <Button variant="primary" type="submit">
+        <Button variant="primary" type="submit" className="mt-4">
           Pay $2.99/month
         </Button>
       </Form>

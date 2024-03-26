@@ -1,6 +1,8 @@
 import { useQuery, useMutation } from "@apollo/client";
 import { Container, Card, Button, Row, Col } from "react-bootstrap";
 // import AgeVerificationModal from "../components/AgeVerificationModal";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 import Auth from "../utils/auth";
 import { removeCocktailId } from "../utils/localStorage";
@@ -85,7 +87,7 @@ const SavedCocktails = () => {
                     </Card.Title>
                     <div className="mb-3">
                       <strong>Category:</strong> {cocktail.category}
-                      </div>
+                    </div>
                     <div>
                       <strong>Ingredients:</strong>
                       <ul>
@@ -104,7 +106,7 @@ const SavedCocktails = () => {
                       className="btn-block btn-danger"
                       onClick={() => handleDeleteCocktail(cocktail)}
                     >
-                      Delete this Cocktail!
+                      <FontAwesomeIcon icon={faTrash} />
                     </Button>
                   </Card.Body>
                 </Card>

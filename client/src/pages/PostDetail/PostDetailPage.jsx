@@ -6,6 +6,8 @@ import { DELETE_COMMENT } from "../../utils/mutations";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import "./PostDetail.css";
 import CreateCommentForm from "../../components/NewCommentForm";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 function PostDetailPage() {
   const formatDate = (dateString) => {
@@ -90,7 +92,7 @@ function PostDetailPage() {
                 variant="danger"
                 onClick={() => handleDeleteComment(comment._id)}
               >
-                Delete Comment
+                <FontAwesomeIcon icon={faTrash} />
               </Button>
             )}
           </div>
